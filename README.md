@@ -53,20 +53,20 @@ They are **4 USB dongles**.
 Here a diagram to better understanding:
 
 ```bash
-			  CODER 1
-             (Compile)
-             /       \
-      Dongle D       Dongle A
-   (Taken by 1)      (Taken by 1)
-       /                    \
-    CODER 4                CODER 2
-(Wait Dongle D)         (Wait Dongle A)
-      \                     /
-      Dongle C         Dongle B
-    (Taken by 4)     (Taken by 2)
-             \       /
-               CODER 3
-               (Wait)
+					CODER 1
+					(Compile)
+					/		\
+			Dongle D		Dongle A
+		(Taken by 1)		(Taken by 1)
+			 /					   \
+		  CODER 4				  CODER 2
+	(Wait Dongle D)        	   (Wait Dongle A)
+			\                     /
+		  Dongle C            Dongle B
+		(Taken by 4)     	(Taken by 2)
+					\       /
+					 CODER 3
+					  (Wait)
 ```
 
 ### 📝 Rules:
