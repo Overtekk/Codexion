@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/06 08:02:45 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/06 11:29:35 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ INCLUDE		=		-I coders
 SRCS_DIR	=		coders
 OBJ_DIR		=		obj
 
-CFILES		=		main.c
+CFILES		=		main.c					\
+					utils/check_arguments.c	\
+					utils/errors_arguments.c
 
 OBJS		=		$(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
