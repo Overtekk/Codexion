@@ -124,11 +124,13 @@ It must not relink.
 ### 💻 Logs:
 
 Any state change of a coder must be formatted as follows:
+```bash
 - timestamp_in_ms X has taken a dongle
 - timestamp_in_ms X is compiling
 - timestamp_in_ms X is debugging
 - timestamp_in_ms X is refactoring
 - timestamp_in_ms X burned out
+```
 
 *X will be the coder number*
 
