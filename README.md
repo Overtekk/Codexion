@@ -52,7 +52,7 @@ They are **4 USB dongles**.
 
 Here a diagram to better understanding:
 
-```
+```bash
 			  CODER 1
              (Compile)
              /       \
