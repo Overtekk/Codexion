@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_mutex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/06 15:48:45 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/06 16:42:31 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/06 16:56:18 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+int	init_mutex_for_dongle(t_data *data)
 {
-	t_data	data;
+	int	index;
 
-	if (argc != 9)
-		return (print_error_argc(), 1);
-	if (check_arg(argv, &data) == 1)
-		return (free_memory(&data), 1);
-	init_thread(&data);
-	free_memory(&data);
+	index = 0;
+	while (data->nbr_dongle != index)
+	{
+		pthread_mutex_init(data->dongle[index].lock, NULL);
+		index++;
+	}
 	return (0);
 }

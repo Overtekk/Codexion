@@ -6,11 +6,14 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/06 15:43:48 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:10:28 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+static	int	init_struct(int *value, t_data *data);
+static	void	create_coders_and_dongle(t_data *data);
 
 int	check_arg(char **arg, t_data *data)
 {
@@ -36,7 +39,7 @@ int	check_arg(char **arg, t_data *data)
 	return (0);
 }
 
-int	init_struct(int *value, t_data *data)
+static	int	init_struct(int *value, t_data *data)
 {
 	data->coder = calloc(1, sizeof(t_coder) * value[0]);
 	if (data->coder == NULL)
@@ -56,14 +59,14 @@ int	init_struct(int *value, t_data *data)
 	return (0);
 }
 
-void	create_coders_and_dongle(t_data *data)
+static	void	create_coders_and_dongle(t_data *data)
 {
 	int	count;
 
 	count = 0;
 	while (data->nbr_coders != count)
 	{
-		data->coder[count].id += count + 1;
+		data->coder[count].id = count + 1;
 		data->coder[count].time_bournout = data->burnout_max;
 		data->coder[count].code_compiled = 0;
 		count++;

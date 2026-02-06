@@ -30,6 +30,9 @@ make
 
 ```bash
 ./codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler
+
+# Alternatly, you can use my script by using:
+./tester.sh 1	# valid [1, 2, 3 ...], you can also put mem after to check the memory.
 ```
 ---
 
@@ -156,7 +159,16 @@ make
 ```bash
 # time is in ms
 ./codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler
+
+# Alternatly, you can use my script by using:
+./tester.sh 1	# valid [1, 2, 3 ...], you can also put mem after to check the memory.
 ```
+
+---
+
+## 🌟 What is a thread?
+
+A **thread** is a lightweight unit of execution that enables multiple tasks to run simultaneously within a single process. Unlike standard sequential execution, threads operate in parallel while sharing the same memory space. This shared memory allows for rapid data exchange but requires careful synchronization (using Mutexes) to avoid data corruption. In C, the `<pthread.h>` library is essential for this project to simulate independent actors performing real-time actions without blocking the main program's execution.
 
 ---
 
@@ -172,5 +184,6 @@ make
 
 ### Threads:
 - https://www.geeksforgeeks.org/c/thread-functions-in-c-c/
+- https://www.codequoi.com/threads-mutex-et-programmation-concurrente-en-c/
 
 ---

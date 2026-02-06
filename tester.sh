@@ -28,4 +28,7 @@ case "$1" in
     2)
         run_test 2 "4 800 200 200 200 5 10 edf"
         ;;
+	*)
+        echo -e "${RED}Unkown test.${NC}"
+        ;;
 esac

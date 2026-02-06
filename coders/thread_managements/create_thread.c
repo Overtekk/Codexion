@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   create_thread.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/06 15:48:45 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/06 15:47:10 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/06 16:16:09 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
+static	void *foo(void* arg);
 
-	if (argc != 9)
-		return (print_error_argc(), 1);
-	if (check_arg(argv, &data) == 1)
-		return (free_memory(&data), 1);
-	init_thread(&data);
-	free_memory(&data);
+static	void *foo(void* arg)
+{
+    printf("%s\n", (char*)arg);
+    return NULL;
+}
+
+int	init_thread(t_data *data)
+{
+	int	index;
+
+	index = 0;
+	while (data->nbr_coders != index)
+	{
+		pthread_create(&data->coder[index].thread_id, NULL, foo, (void*)"Thread is running.");
+		index++;
+	}
+	index = 0;
+	while (data->nbr_coders != index)
+	{
+		pthread_join(data->coder[index].thread_id, NULL);
+		index++;
+	}
 	return (0);
 }
