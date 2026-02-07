@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/06 16:10:28 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:04:03 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static	int	init_struct(int *value, t_data *data)
 	data->time_refac = value[4];
 	data->compile_required = value[5];
 	data->dongle_cooldown = value[6];
+	data->simulation_active = 1;
 	create_coders_and_dongle(data);
 	return (0);
 }
@@ -69,6 +70,7 @@ static	void	create_coders_and_dongle(t_data *data)
 		data->coder[count].id = count + 1;
 		data->coder[count].time_bournout = data->burnout_max;
 		data->coder[count].code_compiled = 0;
+		data->coder[count].data = data;
 		count++;
 	}
 	count = 0;
@@ -76,6 +78,7 @@ static	void	create_coders_and_dongle(t_data *data)
 	{
 		data->dongle[count].id = 'A' + count;
 		data->dongle[count].cooldown = data->dongle_cooldown;
+		data->dongle[count].data = data;
 		count++;
 	}
 }

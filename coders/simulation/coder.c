@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   coder.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/07 16:00:41 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/07 16:01:40 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+void	*coder_goal(void *arg)
 {
-	t_data	data;
+	t_coder	*coder;
 
-	if (argc != 9)
-		return (print_error_argc(), 1);
-	if (check_arg(argv, &data) == 1)
-		return (free_memory(&data), 1);
-	debug_print_struct(&data);
-	printf("\n");
-	init_thread(&data);
-	start_simulation(&data);
-	free_memory(&data);
-	return (0);
+	coder = (t_coder *)arg;
+	coder->time_bournout = get_time_ms() - coder->data->time_comp;
+	coder->time_bournout = get_time_ms() - coder->data->time_debug;
+	coder->time_bournout = get_time_ms() - coder->data->time_refac;
+	return NULL;
 }

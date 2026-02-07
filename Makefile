@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/06 16:58:11 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/07 15:41:17 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,11 @@ CFILES		=		main.c								\
 					utils/check_arguments.c				\
 					utils/errors_arguments.c			\
 					utils/free_memory.c					\
+					utils/check_time.c					\
 					thread_managements/create_thread.c	\
 					thread_managements/init_mutex.c		\
+					simulation/launch.c					\
+					simulation/coder.c					\
 					debug/print_struct.c
 
 OBJS		=		$(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))

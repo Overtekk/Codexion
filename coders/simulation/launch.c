@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   launch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/07 16:00:41 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/07 16:00:18 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+int	start_simulation(t_data *data)
 {
-	t_data	data;
+	int	index;
 
-	if (argc != 9)
-		return (print_error_argc(), 1);
-	if (check_arg(argv, &data) == 1)
-		return (free_memory(&data), 1);
-	debug_print_struct(&data);
-	printf("\n");
-	init_thread(&data);
-	start_simulation(&data);
-	free_memory(&data);
+	index = 0;
+	while (data->simulation_active == 1)
+	{
+		while (data->nbr_coders != index)
+		{
+			if ((get_time_ms() - data->coder[index].time_bournout) > data->burnout_max)
+				index++;
+			else
+			{
+				printf("Coder %d a fait un burn out", data->coder[index].id);
+				break;
+			}
+		}
+		break;
+	}
 	return (0);
 }

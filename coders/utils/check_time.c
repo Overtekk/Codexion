@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_time.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/07 16:00:41 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/07 15:23:48 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/07 15:35:45 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+long long	get_time_ms(void)
 {
-	t_data	data;
+	struct timeval tv;
 
-	if (argc != 9)
-		return (print_error_argc(), 1);
-	if (check_arg(argv, &data) == 1)
-		return (free_memory(&data), 1);
-	debug_print_struct(&data);
-	printf("\n");
-	init_thread(&data);
-	start_simulation(&data);
-	free_memory(&data);
-	return (0);
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }

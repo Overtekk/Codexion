@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/06 16:52:50 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/07 15:53:59 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/time.h>
 
 // -------------- //
 //	 STRUCTURES	  //
@@ -58,6 +59,7 @@ typedef struct s_data
 	long long		dongle_cooldown;
 	int				compile_required;
 	char			*scheduler;
+	int				simulation_active;
 	t_coder			*coder;
 	t_dongle		*dongle;
 }					t_data;
@@ -66,14 +68,16 @@ typedef struct s_data
 //	 PROTOTYPES	  //
 // -------------- //
 
-int		check_arg(char **arg, t_data *data);
+int				check_arg(char **arg, t_data *data);
+int				init_thread(t_data *data);
+int				start_simulation(t_data *data);
+void			*coder_goal(void *arg);
 
-int		init_thread(t_data *data);
+long long		get_time_ms(void);
 
-void	print_error_argc(void);
+void			print_error_argc(void);
+void			free_memory(t_data *data);
 
-void	free_memory(t_data *data);
-
-void	debug_print_struct(t_data *data);
+void			debug_print_struct(t_data *data);
 
 #endif
