@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/07 15:53:59 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:17:08 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				check_arg(char **arg, t_data *data);
 int				init_thread(t_data *data);
 int				start_simulation(t_data *data);
 void			*coder_goal(void *arg);
+void			print_logs(long long time, int coder_index, char *action);
 
 long long		get_time_ms(void);
 
