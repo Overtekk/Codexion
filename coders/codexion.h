@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/10 15:17:08 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:23:54 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 // -------------- //
 //	 STRUCTURES	  //
@@ -60,6 +61,7 @@ typedef struct s_data
 	int				compile_required;
 	char			*scheduler;
 	int				simulation_active;
+	long long		time;
 	t_coder			*coder;
 	t_dongle		*dongle;
 }					t_data;

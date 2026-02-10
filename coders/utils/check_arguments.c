@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/07 16:04:03 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:25:37 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static	int	init_struct(int *value, t_data *data)
 	data->compile_required = value[5];
 	data->dongle_cooldown = value[6];
 	data->simulation_active = 1;
+	data->time = get_time_ms();
 	create_coders_and_dongle(data);
 	return (0);
 }
