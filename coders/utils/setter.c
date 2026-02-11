@@ -1,38 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_thread.c                                    :+:      :+:    :+:   */
+/*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/06 15:47:10 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 13:50:29 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/11 13:53:16 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/11 13:58:11 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-
-void	init_thread(t_data *data)
+void	set_burnout(t_coder *coder)
 {
-	int	index;
-
-	index = 0;
-	while (data->nbr_coders != index)
-	{
-		pthread_create(&data->coder[index].thread_id, NULL, coder_goal, &data->coder[index]);
-		index++;
-	}
-}
-
-void	join_thread(t_data *data)
-{
-	int	index;
-
-	index = 0;
-	while (data->nbr_coders != index)
-	{
-		pthread_join(data->coder[index].thread_id, NULL);
-		index++;
-	}
+	pthread_mutex_lock(&coder->mutex_burnout);
+	coder->time_bournout = get_time_ms();
+	pthread_mutex_unlock(&coder->mutex_burnout);
 }

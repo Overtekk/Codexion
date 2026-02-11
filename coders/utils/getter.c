@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_thread.c                                    :+:      :+:    :+:   */
+/*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/06 15:47:10 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 13:50:29 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/11 13:37:03 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/11 13:58:58 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-
-void	init_thread(t_data *data)
+int	get_simulation(t_data *data)
 {
-	int	index;
+	int	status;
 
-	index = 0;
-	while (data->nbr_coders != index)
-	{
-		pthread_create(&data->coder[index].thread_id, NULL, coder_goal, &data->coder[index]);
-		index++;
-	}
+	status = 0;
+	pthread_mutex_lock(&data->mutex_simu);
+	status = data->simulation_active;
+	pthread_mutex_unlock(&data->mutex_simu);
+	return (status);
 }
 
-void	join_thread(t_data *data)
+long long	get_burnout(t_coder *coder)
 {
-	int	index;
+	long long	burnout;
 
-	index = 0;
-	while (data->nbr_coders != index)
-	{
-		pthread_join(data->coder[index].thread_id, NULL);
-		index++;
-	}
+	burnout = 0;
+	pthread_mutex_lock(&coder->mutex_burnout);
+	burnout = coder->time_bournout;
+	pthread_mutex_unlock(&coder->mutex_burnout);
+	return (burnout);
 }
