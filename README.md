@@ -186,4 +186,15 @@ A **thread** is a lightweight unit of execution that enables multiple tasks to r
 - https://www.geeksforgeeks.org/c/thread-functions-in-c-c/
 - https://www.codequoi.com/threads-mutex-et-programmation-concurrente-en-c/
 
+#### Queue:
+- https://medium.com/@chedy.smaoui/coding-basics-thread-safe-blocking-queue-in-c-6ecad9b4980a
+- https://stackoverflow.com/questions/8253278/message-passing-between-threads-in-c
+- https://stackoverflow.com/questions/10721148/how-to-implement-thread-safe-queues
+
+
+<br>
+
+### Man pages for functions
+- https://pubs.opengroup.org/onlinepubs/7908799/xsh/pthread_mutex_init.html
+
 ---

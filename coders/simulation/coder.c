@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/10 16:30:40 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:55:02 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,15 @@
 void	*coder_goal(void *arg)
 {
 	t_coder	*coder;
-	long long	time;
 
 	coder = (t_coder *)arg;
-	time = get_time_ms();
-	coder->time_bournout = get_time_ms() - coder->data->time_comp;
-	print_logs(time - coder->data->time, coder->id, "compile");
+	print_logs(coder->id, "compile", coder->data);
 	usleep(coder->data->time_comp * 1000);
 
-	time = get_time_ms();
-	coder->time_bournout = get_time_ms() - coder->data->time_debug;
-	print_logs(time - coder->data->time, coder->id, "debug");
+	print_logs(coder->id, "debug", coder->data);
 	usleep(coder->data->time_debug * 1000);
 
-	time = get_time_ms();
-	coder->time_bournout = get_time_ms() - coder->data->time_refac;
-	print_logs(time - coder->data->time, coder->id, "refac");
+	print_logs(coder->id, "refac", coder->data);
 	usleep(coder->data->time_refac * 1000);
 	return NULL;
 }

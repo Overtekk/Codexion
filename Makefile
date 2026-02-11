@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/10 15:12:15 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/11 10:46:53 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,12 @@ OBJ_DIR		=		obj
 
 CFILES		=		main.c								\
 					utils/check_arguments.c				\
-					utils/errors_arguments.c			\
+					utils/init_struct.c					\
+					utils/print_errors.c				\
 					utils/free_memory.c					\
 					utils/check_time.c					\
 					thread_managements/create_thread.c	\
-					thread_managements/init_mutex.c		\
+					thread_managements/create_mutex.c	\
 					simulation/launch.c					\
 					simulation/coder.c					\
 					simulation/logs.c					\
