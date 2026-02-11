@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 13:59:24 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:31:01 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,22 @@ typedef struct s_data	t_data;
 
 typedef struct s_queue
 {
-
+	t_coder			*coder;
+	struct s_queue	*next;
 }					t_queue;
+
+typedef struct s_queue_manager
+{
+	t_queue			*first;
+	t_queue			*last;
+	pthread_mutex_t	lock;
+}					t_queue_manager;
 
 typedef struct s_coder
 {
+	long long		time_bournout;
 	int				id;
 	int				code_compiled;
-	long long		time_bournout;
 	pthread_t		thread_id;
 	pthread_mutex_t	*left_dongle;
 	pthread_mutex_t	*right_dongle;
@@ -49,27 +57,28 @@ typedef struct s_coder
 
 typedef struct s_dongle
 {
-	char			id;
 	long long		cooldown;
+	char			id;
 	pthread_mutex_t	lock;
 	t_data			*data;
 }					t_dongle;
 
 typedef struct s_data
 {
-	int				nbr_coders;
-	int				nbr_dongle;
 	long long		burnout_max;
 	long long		time_comp;
 	long long		time_debug;
 	long long		time_refac;
 	long long		dongle_cooldown;
-	int				compile_required;
-	char			*scheduler;
-	int				simulation_active;
 	long long		time;
+	char			*scheduler;
+	int				compile_required;
+	int				nbr_coders;
+	int				nbr_dongle;
+	int				simulation_active;
 	t_coder			*coder;
 	t_dongle		*dongle;
+	t_queue_manager	queue_control;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t mutex_simu;
 }					t_data;
