@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 10:54:11 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/13 11:07:47 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	init_struct(int *value, t_data *data)
 {
 	data->coder = calloc(1, sizeof(t_coder) * value[0]);
 	if (data->coder == NULL)
-		return (1);
+		return (print_error(STR_ERR_MALLOC, NULL, data));
 	data->dongle = calloc(1, sizeof(t_dongle) * value[0]);
 	if (data->dongle == NULL)
-		return (1);
+		return (print_error(STR_ERR_MALLOC, NULL, data));
 	data->nbr_coders = value[0];
 	data->nbr_dongle = value[0];
 	data->burnout_max = value[1];
@@ -32,6 +32,8 @@ int	init_struct(int *value, t_data *data)
 	data->dongle_cooldown = value[6];
 	data->simulation_active = 1;
 	data->time = get_time_ms();
+	data->queue_control.first = NULL;
+	data->queue_control.last = NULL;
 	create_coders_and_dongle(data);
 	return (0);
 }
@@ -48,7 +50,8 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].code_compiled = 0;
 		data->coder[count].data = data;
 		data->coder[count].left_dongle = &data->dongle[count].lock;
-		data->coder[count].right_dongle = &data->dongle[(count + 1) % data->nbr_coders].lock;
+		data->coder[count].right_dongle = (&data->dongle[(count + 1)
+				% data->nbr_coders].lock);
 		count++;
 	}
 	count = 0;

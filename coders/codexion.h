@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 15:31:01 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/13 11:03:35 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,18 @@
 # include <unistd.h>
 
 // -------------- //
+//	   DEFINE	  //
+// -------------- //
+
+# define STR_ERR_MALLOC	"Could not allocate memory.\n"
+# define STR_ERR_INV_ARG "Invalid argument"
+
+// -------------- //
 //	 STRUCTURES	  //
 // -------------- //
 
 typedef struct s_data	t_data;
+typedef struct s_coder	t_coder;
 
 typedef struct s_queue
 {
@@ -51,7 +59,7 @@ typedef struct s_coder
 	pthread_t		thread_id;
 	pthread_mutex_t	*left_dongle;
 	pthread_mutex_t	*right_dongle;
-	pthread_mutex_t mutex_burnout;
+	pthread_mutex_t	mutex_burnout;
 	t_data			*data;
 }					t_coder;
 
@@ -80,7 +88,7 @@ typedef struct s_data
 	t_dongle		*dongle;
 	t_queue_manager	queue_control;
 	pthread_mutex_t	mutex_print;
-	pthread_mutex_t mutex_simu;
+	pthread_mutex_t	mutex_simu;
 }					t_data;
 
 // -------------- //
@@ -96,6 +104,7 @@ void			init_thread(t_data *data);
 void			join_thread(t_data *data);
 int				init_mutex_for_dongle(t_data *data);
 int				init_mutex_print(t_data *data);
+int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 
 // Simulation //
 int				start_simulation(t_data *data);
@@ -111,8 +120,9 @@ void			print_logs(int index, char *action, t_data *data);
 
 // Functionalities //
 long long		get_time_ms(void);
-void			print_error_argc(void);
+int				print_error(char *str, char *details, t_data *data);
 void			free_memory(t_data *data);
+char			*print_usage(void);
 
 // Debug //
 void			debug_print_struct(t_data *data);

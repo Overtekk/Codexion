@@ -190,6 +190,7 @@ A **thread** is a lightweight unit of execution that enables multiple tasks to r
 - https://medium.com/@chedy.smaoui/coding-basics-thread-safe-blocking-queue-in-c-6ecad9b4980a
 - https://stackoverflow.com/questions/8253278/message-passing-between-threads-in-c
 - https://stackoverflow.com/questions/10721148/how-to-implement-thread-safe-queues
+- https://sites.uclouvain.be/SyllabusC/notes/Theorie/Threads/threads2.html
 
 
 <br>

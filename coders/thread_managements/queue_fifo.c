@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_thread.c                                    :+:      :+:    :+:   */
+/*   queue_fifo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/06 15:47:10 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:08:12 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/13 09:12:27 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/13 11:08:19 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	init_thread(t_data *data)
+int	add_to_queue(t_queue_manager *manager, t_coder *coder_to_add)
 {
-	int	index;
+	t_queue	*node;
 
-	index = 0;
-	while (data->nbr_coders != index)
+	node = malloc(sizeof(t_queue));
+	if (node == NULL)
+		return (1);
+	node->coder = coder_to_add;
+	node->next = NULL;
+	pthread_mutex_lock(&manager->lock);
+	if (manager->first == NULL)
 	{
-		pthread_create(&data->coder[index].thread_id, NULL, coder_goal,
-			&data->coder[index]);
-		index++;
+		manager->first = node;
+		manager->last = node;
 	}
-}
-
-void	join_thread(t_data *data)
-{
-	int	index;
-
-	index = 0;
-	while (data->nbr_coders != index)
+	else
 	{
-		pthread_join(data->coder[index].thread_id, NULL);
-		index++;
+		manager->last->next = node;
+		manager->last = node;
 	}
+	pthread_mutex_unlock(&manager->lock);
+	return (0);
 }
