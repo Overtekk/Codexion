@@ -8,9 +8,8 @@
 ---
 
 <div align="center">
-<img src="https://img.shields.io/badge/No score%20-inactive?logo=42&logoColor=ffff" />
-<img src="https://img.shields.io/badge/bonus-none-inactive"/>
-<img src="https://img.shields.io/badge/date completed-none-inactive"/>
+  <img src="https://img.shields.io/badge/SCORE-None-%235CB338?style=for-the-badge&logo=42&logoColor=white"/>
+  <img src="https://img.shields.io/badge/COMPLETED-No-%23007ACC?style=for-the-badge&logo=calendar&logoColor=white"/>
 </div>
 
 ## ⚠️ Disclaimer

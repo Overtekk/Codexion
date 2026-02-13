@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:03:35 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:13:13 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 
 typedef struct s_data	t_data;
 typedef struct s_coder	t_coder;
+typedef struct s_dongle	t_dongle;
 
 typedef struct s_queue
 {
@@ -57,8 +58,8 @@ typedef struct s_coder
 	int				id;
 	int				code_compiled;
 	pthread_t		thread_id;
-	pthread_mutex_t	*left_dongle;
-	pthread_mutex_t	*right_dongle;
+	t_dongle		*left_dongle;
+	t_dongle		*right_dongle;
 	pthread_mutex_t	mutex_burnout;
 	t_data			*data;
 }					t_coder;
@@ -78,7 +79,7 @@ typedef struct s_data
 	long long		time_debug;
 	long long		time_refac;
 	long long		dongle_cooldown;
-	long long		time;
+	long long		start_time;
 	char			*scheduler;
 	int				compile_required;
 	int				nbr_coders;
@@ -109,6 +110,8 @@ int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 // Simulation //
 int				start_simulation(t_data *data);
 void			*coder_goal(void *arg);
+int				try_take_dongle(t_dongle *dongle, t_data *data);
+void			put_dongle(t_dongle *l_dongle, t_dongle *r_dongle);
 
 // Getter, Setter //
 int				get_simulation(t_data *data);

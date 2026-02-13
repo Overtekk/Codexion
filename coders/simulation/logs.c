@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 14:00:08 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/13 16:46:22 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_logs(int index, char *action, t_data *data)
 	long long	time;
 
 	pthread_mutex_lock(&data->mutex_print);
-	time = get_time_ms() - data->time;
+	time = get_time_ms() - data->start_time;
 
-	if (strcmp(action, "dongle") == 0)
+	if (strcmp(action, "takedongle") == 0)
 		printf("[%lld] Coder %d has taken a dongle\n", time, index);
 
 	else if (strcmp(action, "compile") == 0)

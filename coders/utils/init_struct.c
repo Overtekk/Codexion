@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:07:47 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/13 15:39:18 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	init_struct(int *value, t_data *data)
 	data->compile_required = value[5];
 	data->dongle_cooldown = value[6];
 	data->simulation_active = 1;
-	data->time = get_time_ms();
+	data->start_time = get_time_ms();
 	data->queue_control.first = NULL;
 	data->queue_control.last = NULL;
 	create_coders_and_dongle(data);
@@ -49,16 +49,16 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].time_bournout = get_time_ms();
 		data->coder[count].code_compiled = 0;
 		data->coder[count].data = data;
-		data->coder[count].left_dongle = &data->dongle[count].lock;
+		data->coder[count].left_dongle = &data->dongle[count];
 		data->coder[count].right_dongle = (&data->dongle[(count + 1)
-				% data->nbr_coders].lock);
+				% data->nbr_coders]);
 		count++;
 	}
 	count = 0;
 	while (data->nbr_dongle != count)
 	{
 		data->dongle[count].id = 'A' + count;
-		data->dongle[count].cooldown = data->dongle_cooldown;
+		data->dongle[count].cooldown = 0;
 		data->dongle[count].data = data;
 		count++;
 	}
