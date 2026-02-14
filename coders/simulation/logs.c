@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 11:29:39 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 13:04:45 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_logs(int index, char dongle_id, char *action, t_data *data)
 	time = get_time_ms() - data->start_time;
 
 	if (strcmp(action, "takedongle") == 0)
-		printf("[%lld] Coder %d has taken a dongle %c\n", time, index, dongle_id);
+		printf("[%lld] Coder %d has taken dongle %c\n", time, index, dongle_id);
 
 	else if (strcmp(action, "compile") == 0)
 		printf("[%lld] Coder %d is compiling (%d)\n", time, index, data->coder[index - 1].code_compiled + 1);

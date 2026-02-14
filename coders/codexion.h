@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 11:29:21 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 14:01:57 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_coder
 	long long		time_bournout;
 	int				id;
 	int				code_compiled;
+	int				have_finished;
 	pthread_t		thread_id;
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;

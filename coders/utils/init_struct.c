@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 10:24:17 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 14:02:20 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].id = count + 1;
 		data->coder[count].time_bournout = get_time_ms();
 		data->coder[count].code_compiled = 0;
+		data->coder[count].have_finished = 0;
 		data->coder[count].data = data;
 		next_id = (count + 1) % data->nbr_coders;
 		if (count < next_id)
