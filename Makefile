@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/13 10:13:24 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/14 10:34:16 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,19 @@ INCLUDE		=		-I coders
 SRCS_DIR	=		coders
 OBJ_DIR		=		obj
 
-CFILES		=		main.c								\
-					utils/check_arguments.c				\
-					utils/init_struct.c					\
-					utils/exit.c						\
-					utils/check_time.c					\
-					utils/getter.c						\
-					utils/setter.c						\
-					thread_managements/create_thread.c	\
-					thread_managements/create_mutex.c	\
-					simulation/launch.c					\
-					simulation/coder.c					\
-					simulation/logs.c					\
+CFILES		=		main.c									\
+					utils/check_arguments.c					\
+					utils/init_struct.c						\
+					utils/exit.c							\
+					utils/check_time.c						\
+					utils/getter.c							\
+					utils/setter.c							\
+					thread_managements/create_thread.c		\
+					thread_managements/create_mutex.c		\
+					simulation/launch.c						\
+					simulation/coder.c						\
+					simulation/logs.c						\
+					simulation/utils/dongles_management.c	\
 					debug/print_struct.c
 
 OBJS		=		$(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))

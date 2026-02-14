@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 17:13:13 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 11:29:21 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				start_simulation(t_data *data);
 void			*coder_goal(void *arg);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
-void			put_dongle(t_dongle *l_dongle, t_dongle *r_dongle);
+void			reset_dongle_cooldown(t_coder *coder, t_data *data);
 
 // Getter, Setter //
 int				get_simulation(t_data *data);
@@ -119,10 +119,11 @@ long long		get_burnout(t_coder *coder);
 void			set_burnout(t_coder *coder);
 
 // Logs //
-void			print_logs(int index, char *action, t_data *data);
+void			print_logs(int index, char dongle_id, char *action, t_data *data);
 
 // Functionalities //
 long long		get_time_ms(void);
+long long		get_sim_time(t_data *data);
 int				print_error(char *str, char *details, t_data *data);
 void			free_memory(t_data *data);
 char			*print_usage(void);

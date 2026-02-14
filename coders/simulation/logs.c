@@ -6,13 +6,13 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 16:46:22 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 11:29:39 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	print_logs(int index, char *action, t_data *data)
+void	print_logs(int index, char dongle_id, char *action, t_data *data)
 {
 	long long	time;
 
@@ -20,7 +20,7 @@ void	print_logs(int index, char *action, t_data *data)
 	time = get_time_ms() - data->start_time;
 
 	if (strcmp(action, "takedongle") == 0)
-		printf("[%lld] Coder %d has taken a dongle\n", time, index);
+		printf("[%lld] Coder %d has taken a dongle %c\n", time, index, dongle_id);
 
 	else if (strcmp(action, "compile") == 0)
 		printf("[%lld] Coder %d is compiling (%d)\n", time, index, data->coder[index - 1].code_compiled + 1);

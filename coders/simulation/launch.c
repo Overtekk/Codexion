@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/11 13:40:22 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 11:47:52 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	start_simulation(t_data *data)
 				pthread_mutex_lock(&data->mutex_simu);
 				data->simulation_active = 0;
 				pthread_mutex_unlock(&data->mutex_simu);
-				print_logs(data->coder[index].id, "burns_out", data);
+				print_logs(data->coder[index].id, 0, "burns_out", data);
 				break;
 			}
 			else

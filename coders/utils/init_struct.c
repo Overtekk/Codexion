@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 15:39:18 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/14 10:24:17 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_struct(int *value, t_data *data)
 static void	create_coders_and_dongle(t_data *data)
 {
 	int	count;
+	int	next_id;
 
 	count = 0;
 	while (data->nbr_coders != count)
@@ -49,9 +50,17 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].time_bournout = get_time_ms();
 		data->coder[count].code_compiled = 0;
 		data->coder[count].data = data;
-		data->coder[count].left_dongle = &data->dongle[count];
-		data->coder[count].right_dongle = (&data->dongle[(count + 1)
-				% data->nbr_coders]);
+		next_id = (count + 1) % data->nbr_coders;
+		if (count < next_id)
+        {
+            data->coder[count].left_dongle = &data->dongle[count];
+            data->coder[count].right_dongle = &data->dongle[next_id];
+        }
+        else
+        {
+            data->coder[count].left_dongle = &data->dongle[next_id];
+            data->coder[count].right_dongle = &data->dongle[count];
+        }
 		count++;
 	}
 	count = 0;
