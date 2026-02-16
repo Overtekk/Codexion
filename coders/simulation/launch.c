@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 15:27:58 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:03:55 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ int	start_simulation(t_data *data)
 	int	index;
 	int	finish;
 
-	finish = 0;
 	while (get_simulation(data) == 1)
 	{
 		index = 0;
+		finish = 0;
 		while (data->nbr_coders != index)
 		{
 			if (data->coder[index].have_finished == 1)
 			{
-				data->coder[index].have_finished = 1;
 				finish++;
 			}
 			else if ((get_time_ms() - data->coder[index].time_bournout) > data->burnout_max)
@@ -33,13 +32,18 @@ int	start_simulation(t_data *data)
 				pthread_mutex_lock(&data->mutex_simu);
 				data->simulation_active = 0;
 				pthread_mutex_unlock(&data->mutex_simu);
-				print_logs(data->coder[index].id, 0, "burns_out", data);
+				print_logs(data->coder[index].id, 0, ACT_BURNS, data);
 				break;
+			}
+			if (finish == data->nbr_coders)
+			{
+				data->simulation_active = 0;
+				printf(LOG_SUCCESS "\n");
 			}
 			else
 				index++;
 		}
-		usleep(1000);
+		usleep(300);
 	}
 	return (0);
 }

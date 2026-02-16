@@ -6,16 +6,16 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 14:01:57 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 15:55:25 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
-// -------------- //
-//	 INCLUDES	  //
-// -------------- //
+// -------------------- //
+//		INCLUDES		//
+// -------------------- //
 
 # include <stdio.h>
 # include <pthread.h>
@@ -24,20 +24,38 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-// -------------- //
-//	   DEFINE	  //
-// -------------- //
+// -------------------- //
+//		MACROS			//
+// -------------------- //
 
-# define STR_ERR_MALLOC	"Could not allocate memory.\n"
-# define STR_ERR_INV_ARG "Invalid argument"
+// Errors message //
+# define STR_ERR_MALLOC		"Could not allocate memory.\n"
+# define STR_ERR_INV_ARG	"Invalid argument"
 
-// -------------- //
-//	 STRUCTURES	  //
-// -------------- //
+// Logs message //
+# define LOG_TAKE_DONGLE	"[%lld] Coder %d has taken dongle %c\n"
+# define LOG_COMPILING		"[%lld] Coder %d is compiling (%d)\n"
+# define LOG_DEBUGGING		"[%lld] Coder %d is debugging\n"
+# define LOG_REFACTOR		"[%lld] Coder %d is refactoring\n"
+# define LOG_BURNS_OUT		"[%lld] Coder %d burned out\n"
+# define LOG_SUCCESS		"All coders have compiled. They can rest... for now"
 
-typedef struct s_data	t_data;
-typedef struct s_coder	t_coder;
-typedef struct s_dongle	t_dongle;
+// Action //
+# define ACT_TAKE		"takedongle"
+# define ACT_COMP		"compile"
+# define ACT_DEBUG		"debug"
+# define ACT_REFAC		"refac"
+# define ACT_BURNS		"burns_out"
+
+// -------------------- //
+//		STRUCTURES		//
+// -------------------- //
+
+typedef struct s_data			t_data;
+typedef struct s_coder			t_coder;
+typedef struct s_dongle			t_dongle;
+typedef struct s_queue			t_queue;
+typedef struct s_queue_manager	t_queue_manager;
 
 typedef struct s_queue
 {
@@ -93,9 +111,9 @@ typedef struct s_data
 	pthread_mutex_t	mutex_simu;
 }					t_data;
 
-// -------------- //
-//	 PROTOTYPES	  //
-// -------------- //
+// -------------------- //
+//		PROTOTYPES		//
+// -------------------- //
 
 // Arguments, Malloc, Init structures //
 int				check_arg(char **arg, t_data *data);
@@ -120,7 +138,8 @@ long long		get_burnout(t_coder *coder);
 void			set_burnout(t_coder *coder);
 
 // Logs //
-void			print_logs(int index, char dongle_id, char *action, t_data *data);
+void			print_logs(int index, char dongle_id, char *action,
+					t_data *data);
 
 // Functionalities //
 long long		get_time_ms(void);

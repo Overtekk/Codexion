@@ -21,8 +21,10 @@ run_test() {
 	$VALGRIND $PROG $2
 }
 
-#  <number_of_coders> <time_to_burnout> <time_to_compile> <time_to_debug> <time_to_refactor>
-#  <number_of_compiles_required> <dongle_cooldown> <scheduler>
+#  <number_of_coders>
+#  <time_to_burnout> <time_to_compile> <time_to_debug> <time_to_refactor>
+#  <number_of_compiles_required>
+#  <dongle_cooldown> <scheduler>
 
 
 case "$1" in
@@ -32,8 +34,8 @@ case "$1" in
     2)
         run_test 2 "4 800 200 200 200 5 10 edf"
         ;;
-    2)
-        run_test 2 "10 10000 100 100 100 20 50 fifo"
+    3)
+        run_test 2 "4 10000 100 100 100 5 50 fifo"
         ;;
 	*)
         echo -e "${RED}Unkown test.${NC}"

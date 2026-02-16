@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 13:04:45 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 15:54:40 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ void	print_logs(int index, char dongle_id, char *action, t_data *data)
 	pthread_mutex_lock(&data->mutex_print);
 	time = get_time_ms() - data->start_time;
 
-	if (strcmp(action, "takedongle") == 0)
-		printf("[%lld] Coder %d has taken dongle %c\n", time, index, dongle_id);
+	if (strcmp(action, ACT_TAKE) == 0)
+		printf(LOG_TAKE_DONGLE, time, index, dongle_id);
 
-	else if (strcmp(action, "compile") == 0)
-		printf("[%lld] Coder %d is compiling (%d)\n", time, index, data->coder[index - 1].code_compiled + 1);
+	else if (strcmp(action, ACT_COMP) == 0)
+		printf(LOG_COMPILING, time, index, data->coder[index - 1].code_compiled + 1);
 
-	else if (strcmp(action, "debug") == 0)
-		printf("[%lld] Coder %d is debugging\n", time, index);
+	else if (strcmp(action, ACT_DEBUG) == 0)
+		printf(LOG_DEBUGGING, time, index);
 
-	else if (strcmp(action, "refac") == 0)
-		printf("[%lld] Coder %d is refactoring\n", time, index);
+	else if (strcmp(action, ACT_REFAC) == 0)
+		printf(LOG_REFACTOR, time, index);
 
-	else if (strcmp(action, "burns_out") == 0)
-		printf("[%lld] Coder %d burned out\n", time, index);
+	else if (strcmp(action, ACT_BURNS) == 0)
+		printf(LOG_BURNS_OUT, time, index);
 
 	pthread_mutex_unlock(&data->mutex_print);
 }
