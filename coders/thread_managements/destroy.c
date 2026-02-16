@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_thread.c                                    :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/06 15:47:10 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:34:32 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/16 16:35:21 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/16 16:45:30 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	init_thread(t_data *data)
+int	destroy_mutex(t_data *data)
 {
 	int	index;
 
 	index = 0;
-	pthread_create(&data->monitoring_id, NULL, start_simulation, &data);
 	while (data->nbr_coders != index)
 	{
-		pthread_create(&data->coder[index].thread_id, NULL, coder_goal,
-			&data->coder[index]);
+		pthread_mutex_destroy(&data->dongle[index].lock);
+		pthread_mutex_destroy(&data->coder[index].mutex_burnout);
 		index++;
 	}
-}
-
-void	join_thread(t_data *data)
-{
-	int	index;
-
-	index = 0;
-	pthread_join(data->monitoring_id, NULL);
-	while (data->nbr_coders != index)
-	{
-		pthread_join(data->coder[index].thread_id, NULL);
-		index++;
-	}
+	pthread_mutex_destroy(&data->mutex_print);
+	pthread_mutex_destroy(&data->mutex_simu);
+	pthread_mutex_destroy(&data->queue_control.lock);
+	return (0);
 }

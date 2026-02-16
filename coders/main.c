@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:05:28 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:39:56 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_mutex_thread(&data) == 1)
 		return (1);
-	start_simulation(&data);
 	join_thread(&data);
+	destroy_mutex(&data);
 	free_memory(&data);
 	return (0);
 }

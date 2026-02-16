@@ -6,17 +6,19 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:03:55 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:45:07 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	start_simulation(t_data *data)
+void	*start_simulation(void *arg)
 {
-	int	index;
-	int	finish;
+	t_data	*data;
+	int		index;
+	int		finish;
 
+	data = (t_data *)arg;
 	while (get_simulation(data) == 1)
 	{
 		index = 0;
@@ -45,5 +47,5 @@ int	start_simulation(t_data *data)
 		}
 		usleep(300);
 	}
-	return (0);
+	return (NULL);
 }

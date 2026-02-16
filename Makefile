@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/14 10:34:16 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/16 16:35:45 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ CFILES		=		main.c									\
 					utils/setter.c							\
 					thread_managements/create_thread.c		\
 					thread_managements/create_mutex.c		\
+					thread_managements/destroy.c			\
 					simulation/launch.c						\
 					simulation/coder.c						\
 					simulation/logs.c						\

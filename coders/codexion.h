@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 15:55:25 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:44:26 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@
 # define ACT_DEBUG		"debug"
 # define ACT_REFAC		"refac"
 # define ACT_BURNS		"burns_out"
+
+// Max coders //
+# define MAX_CODERS 300
 
 // -------------------- //
 //		STRUCTURES		//
@@ -109,6 +112,7 @@ typedef struct s_data
 	t_queue_manager	queue_control;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_simu;
+	pthread_t		monitoring_id;
 }					t_data;
 
 // -------------------- //
@@ -119,15 +123,16 @@ typedef struct s_data
 int				check_arg(char **arg, t_data *data);
 int				init_struct(int *value, t_data *data);
 
-// Init Threads, Mutex //
+// Threads, mutex management //
 void			init_thread(t_data *data);
 void			join_thread(t_data *data);
 int				init_mutex_for_dongle(t_data *data);
 int				init_mutex_print(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
+int				destroy_mutex(t_data *data);
 
 // Simulation //
-int				start_simulation(t_data *data);
+void			*start_simulation(void *arg);
 void			*coder_goal(void *arg);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
 void			reset_dongle_cooldown(t_coder *coder, t_data *data);

@@ -35,7 +35,10 @@ case "$1" in
         run_test 2 "4 800 200 200 200 5 10 edf"
         ;;
     3)
-        run_test 2 "4 10000 100 100 100 5 50 fifo"
+        run_test 3 "4 10000 100 100 100 5 50 fifo"
+        ;;
+	one_compiler)
+        run_test 4 "1 1000 200 200 200 5 50 fifo"
         ;;
 	*)
         echo -e "${RED}Unkown test.${NC}"

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 10:36:11 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:51:29 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	check_arg(char **arg, t_data *data)
 	{
 		conv_arg[i - 1] = atoi(arg[i]);
 		if (conv_arg[i - 1] >= 1)
+		{
+			if (i == 1 && conv_arg[i - 1] >= MAX_CODERS)
+				return (print_error(STR_ERR_INV_ARG, arg[i], data));
 			i++;
+		}
 		else
 			return (print_error(STR_ERR_INV_ARG, arg[i], data));
 	}
