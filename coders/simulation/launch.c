@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 11:57:55 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:11:23 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*start_simulation(void *arg)
 			{
 				pthread_mutex_lock(&data->mutex_simu);
 				data->simulation_active = 0;
+				pthread_cond_broadcast(&data->queue_control.cond);
 				pthread_mutex_unlock(&data->mutex_simu);
 				print_logs(data->coder[index].id, 0, ACT_BURNS, data);
 				return (NULL);

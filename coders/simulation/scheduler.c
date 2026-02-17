@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:30:39 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 12:01:14 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:09:09 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	scheduler_fifo(t_data *data, t_coder *coder, char *action)
 			pthread_cond_wait(&data->queue_control.cond, &data->queue_control.lock);
 	}
 	else if (strcmp(action, REMOVE_QUEUE) == 0)
+	{
 		remove_from_queue(&data->queue_control);
+		pthread_cond_broadcast(&data->queue_control.cond);
+	}
 	pthread_mutex_unlock(&data->queue_control.lock);
 	return (0);
 }
