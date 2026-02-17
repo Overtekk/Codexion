@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 09:57:07 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 11:12:27 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:50:41 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	reset_dongle_cooldown(t_coder *coder, t_data *data)
 {
-	long long curr_time;
+	long long	curr_time;
 
 	curr_time = get_sim_time(data);
 	coder->left_dongle->cooldown = curr_time + data->dongle_cooldown;

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:32:25 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:49:33 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,28 +78,30 @@ typedef struct s_queue_manager
 
 typedef struct s_coder
 {
+	t_data			*data;
+	t_dongle		*left_dongle;
+	t_dongle		*right_dongle;
 	long long		time_bournout;
 	int				id;
 	int				code_compiled;
 	int				have_finished;
 	pthread_t		thread_id;
-	t_dongle		*left_dongle;
-	t_dongle		*right_dongle;
 	pthread_mutex_t	mutex_burnout;
-	pthread_mutex_t mutex_finish;
-	t_data			*data;
+	pthread_mutex_t	mutex_finish;
 }					t_coder;
 
 typedef struct s_dongle
 {
+	t_data			*data;
 	long long		cooldown;
 	char			id[10];
 	pthread_mutex_t	lock;
-	t_data			*data;
 }					t_dongle;
 
 typedef struct s_data
 {
+	t_coder			*coder;
+	t_dongle		*dongle;
 	long long		burnout_max;
 	long long		time_comp;
 	long long		time_debug;
@@ -111,12 +113,10 @@ typedef struct s_data
 	int				nbr_coders;
 	int				nbr_dongle;
 	int				simulation_active;
-	t_coder			*coder;
-	t_dongle		*dongle;
+	pthread_t		monitoring_id;
 	t_queue_manager	queue_control;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_simu;
-	pthread_t		monitoring_id;
 }					t_data;
 
 // -------------------- //

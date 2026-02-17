@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:04:56 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:49:58 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int	take_dongle(t_coder *coder)
 		}
 		if (try_take_dongle(coder->right_dongle, coder->data) == 0)
 		{
-			print_logs(coder->id, coder->left_dongle->id, ACT_TAKE, coder->data);
-			print_logs(coder->id, coder->right_dongle->id, ACT_TAKE, coder->data);
+			print_logs(coder->id, coder->left_dongle->id, ACT_TAKE,
+				coder->data);
+			print_logs(coder->id, coder->right_dongle->id, ACT_TAKE,
+				coder->data);
 			return (0);
 		}
 		else

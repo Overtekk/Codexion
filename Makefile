@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/17 12:32:49 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/17 13:54:30 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CFILES		=		main.c									\
 					simulation/launch.c						\
 					simulation/coder.c						\
 					simulation/logs.c						\
-					simulation/scheduler.c					\
+					simulation/scheduler_fifo.c				\
 					simulation/utils/dongles_management.c	\
 					debug/print_struct.c					\
 					debug/print_queue.c

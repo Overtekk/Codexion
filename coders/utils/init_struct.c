@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:30:57 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:48:05 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	create_coders_and_dongle(t_data *data);
 static void	fill_dongle_id(char *id_str, int index);
+static void	init_coders(t_data *data, t_coder *coder, int count);
 
 int	init_struct(int *value, t_data *data)
 {
@@ -42,34 +43,11 @@ int	init_struct(int *value, t_data *data)
 static void	create_coders_and_dongle(t_data *data)
 {
 	int	count;
-	int	next_id;
 
 	count = 0;
 	while (data->nbr_coders != count)
 	{
-		data->coder[count].id = count + 1;
-		data->coder[count].time_bournout = get_time_ms();
-		data->coder[count].code_compiled = 0;
-		data->coder[count].have_finished = 0;
-		data->coder[count].data = data;
-		data->coder[count].left_dongle = NULL;
-		data->coder[count].right_dongle = NULL;
-		if (data->nbr_coders > 1)
-		{
-			next_id = (count + 1) % data->nbr_coders;
-			if (count < next_id)
-			{
-				data->coder[count].left_dongle = &data->dongle[count];
-				data->coder[count].right_dongle = &data->dongle[next_id];
-			}
-			else
-			{
-				data->coder[count].left_dongle = &data->dongle[next_id];
-				data->coder[count].right_dongle = &data->dongle[count];
-			}
-		}
-		else
-			data->coder[count].left_dongle = &data->dongle[count];
+		init_coders(data, &data->coder[count], count);
 		count++;
 	}
 	count = 0;
@@ -103,4 +81,33 @@ static void	fill_dongle_id(char *id_str, int index)
 		i++;
 	}
 	id_str[i] = '\0';
+}
+
+static void	init_coders(t_data *data, t_coder *coder, int count)
+{
+	int	next_id;
+
+	coder->id = count + 1;
+	coder->time_bournout = get_time_ms();
+	coder->code_compiled = 0;
+	coder->have_finished = 0;
+	coder->data = data;
+	coder->left_dongle = NULL;
+	coder->right_dongle = NULL;
+	if (data->nbr_coders > 1)
+	{
+		next_id = (count + 1) % data->nbr_coders;
+		if (count < next_id)
+		{
+			coder->left_dongle = &data->dongle[count];
+			coder->right_dongle = &data->dongle[next_id];
+		}
+		else
+		{
+			coder->left_dongle = &data->dongle[next_id];
+			coder->right_dongle = &data->dongle[count];
+		}
+	}
+	else
+		coder->left_dongle = &data->dongle[count];
 }
