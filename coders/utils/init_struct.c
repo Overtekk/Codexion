@@ -6,13 +6,14 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 12:32:29 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:30:57 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static	void	create_coders_and_dongle(t_data *data);
+static void	create_coders_and_dongle(t_data *data);
+static void	fill_dongle_id(char *id_str, int index);
 
 int	init_struct(int *value, t_data *data)
 {
@@ -51,6 +52,8 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].code_compiled = 0;
 		data->coder[count].have_finished = 0;
 		data->coder[count].data = data;
+		data->coder[count].left_dongle = NULL;
+		data->coder[count].right_dongle = NULL;
 		if (data->nbr_coders > 1)
 		{
 			next_id = (count + 1) % data->nbr_coders;
@@ -72,9 +75,32 @@ static void	create_coders_and_dongle(t_data *data)
 	count = 0;
 	while (data->nbr_dongle != count)
 	{
-		data->dongle[count].id = 'A' + count;
+		fill_dongle_id(data->dongle[count].id, count);
 		data->dongle[count].cooldown = 0;
 		data->dongle[count].data = data;
 		count++;
 	}
+}
+
+static void	fill_dongle_id(char *id_str, int index)
+{
+	int		i;
+	int		len;
+	char	temp[10];
+
+	i = 0;
+	while (index >= 0)
+	{
+		temp[i++] = (index % 26) + 'A';
+		index = (index / 26) - 1;
+	}
+	temp[i] = '\0';
+	len = i;
+	i = 0;
+	while (i < len)
+	{
+		id_str[i] = temp[len - 1 - i];
+		i++;
+	}
+	id_str[i] = '\0';
 }

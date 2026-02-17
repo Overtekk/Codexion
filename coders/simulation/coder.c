@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 11:44:40 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:04:56 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	*do_action(t_coder *coder, char *action)
 		usleep(coder->data->time_comp * 1000);
 		coder->code_compiled += 1;
 		if (coder->code_compiled >= coder->data->compile_required)
-			coder->have_finished = 1;
+			set_finished(coder);
 		reset_dongle_cooldown(coder, coder->data);
 	}
 	else if (strcmp(action, ACT_DEBUG) == 0)

@@ -6,13 +6,13 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 15:54:40 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:32:13 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	print_logs(int index, char dongle_id, char *action, t_data *data)
+void	print_logs(int index, char *dongle_id, char *action, t_data *data)
 {
 	long long	time;
 

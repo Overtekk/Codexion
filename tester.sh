@@ -29,18 +29,24 @@ run_test() {
 
 case "$1" in
 	1)
-        run_test 1 "4 800 200 200 200 5 10 fifo"
-        ;;
-    2)
-        run_test 2 "4 800 200 200 200 5 10 edf"
-        ;;
-    3)
-        run_test 3 "4 10000 100 100 100 5 50 fifo"
-        ;;
+		run_test basic_fifo "4 800 200 200 200 5 10 fifo" # Should burn out
+		;;
+	2)
+		run_test basic_edf "4 800 200 200 200 5 10 edf" #
+		;;
+	3)
+		run_test success_fifo "10 10000 100 100 100 5 50 fifo" # Should success
+		;;
+	big)
+		run_test big_test "100 10000 66 24 87 10 10 fifo" # Should success
+		;;
 	one_compiler)
-        run_test 4 "1 1000 200 200 200 5 50 fifo"
-        ;;
+		run_test one_compiler "1 1000 200 200 200 5 50 fifo" # Should burn out
+		;;
+	toomany_compiler)
+		run_test toomany_compiler "999 1000 200 200 200 5 50 fifo" # Managed like an error
+		;;
 	*)
-        echo -e "${RED}Unkown test.${NC}"
-        ;;
+		echo -e "${RED}Unkown test.${NC}"
+		;;
 esac

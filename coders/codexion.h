@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 12:33:02 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:32:25 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define STR_ERR_INV_ARG	"Invalid argument"
 
 // Logs message //
-# define LOG_TAKE_DONGLE	"[%lld] Coder %d has taken dongle %c\n"
+# define LOG_TAKE_DONGLE	"[%lld] Coder %d has taken dongle %s\n"
 # define LOG_COMPILING		"[%lld] Coder %d is compiling (%d)\n"
 # define LOG_DEBUGGING		"[%lld] Coder %d is debugging\n"
 # define LOG_REFACTOR		"[%lld] Coder %d is refactoring\n"
@@ -86,13 +86,14 @@ typedef struct s_coder
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;
 	pthread_mutex_t	mutex_burnout;
+	pthread_mutex_t mutex_finish;
 	t_data			*data;
 }					t_coder;
 
 typedef struct s_dongle
 {
 	long long		cooldown;
-	char			id;
+	char			id[10];
 	pthread_mutex_t	lock;
 	t_data			*data;
 }					t_dongle;
@@ -130,7 +131,7 @@ int				init_struct(int *value, t_data *data);
 void			init_thread(t_data *data);
 void			join_thread(t_data *data);
 int				init_mutex_for_dongle(t_data *data);
-int				init_mutex_print(t_data *data);
+int				init_mutex(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
 int				destroy_mutex(t_data *data);
@@ -147,9 +148,11 @@ int				scheduler_fifo(t_data *data, t_coder *coder, char *action);
 int				get_simulation(t_data *data);
 long long		get_burnout(t_coder *coder);
 void			set_burnout(t_coder *coder);
+int				get_have_finished(t_coder *coder);
+void			set_finished(t_coder *coder);
 
 // Logs //
-void			print_logs(int index, char dongle_id, char *action,
+void			print_logs(int index, char *dongle_id, char *action,
 					t_data *data);
 
 // Functionalities //

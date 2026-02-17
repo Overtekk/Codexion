@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 16:42:31 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 11:11:13 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 13:03:20 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	init_mutex_for_dongle(t_data *data)
 	{
 		pthread_mutex_init(&data->dongle[index].lock, NULL);
 		pthread_mutex_init(&data->coder[index].mutex_burnout, NULL);
+		pthread_mutex_init(&data->coder[index].mutex_finish, NULL);
 		index++;
 	}
 	return (0);
 }
 
-int	init_mutex_print(t_data *data)
+int	init_mutex(t_data *data)
 {
 	pthread_mutex_init(&data->mutex_print, NULL);
 	pthread_mutex_init(&data->mutex_simu, NULL);
