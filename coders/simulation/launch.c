@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 12:11:23 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:43:47 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,26 @@ void	*start_simulation(void *arg)
 		{
 			if (data->coder[index].have_finished == 1)
 				finish++;
-			else if ((get_time_ms() - data->coder[index].time_bournout) > data->burnout_max)
+			else if ((get_time_ms() - get_burnout(&data->coder[index])) > data->burnout_max)
 			{
 				pthread_mutex_lock(&data->mutex_simu);
 				data->simulation_active = 0;
-				pthread_cond_broadcast(&data->queue_control.cond);
 				pthread_mutex_unlock(&data->mutex_simu);
+				pthread_cond_broadcast(&data->queue_control.cond);
 				print_logs(data->coder[index].id, 0, ACT_BURNS, data);
 				return (NULL);
 			}
-			if (finish == data->nbr_coders)
-			{
-				data->simulation_active = 0;
-				printf(LOG_SUCCESS "\n");
-			}
 			else
 				index++;
+		}
+		if (finish == data->nbr_coders)
+		{
+			pthread_mutex_lock(&data->mutex_simu);
+			data->simulation_active = 0;
+			pthread_mutex_unlock(&data->mutex_simu);
+			pthread_cond_broadcast(&data->queue_control.cond);
+			printf(LOG_SUCCESS "\n");
+			return (NULL);
 		}
 		usleep(300);
 	}
