@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 09:57:07 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 10:16:27 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 11:12:27 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	reset_dongle_cooldown(t_coder *coder, t_data *data)
 	coder->right_dongle->cooldown = curr_time + data->dongle_cooldown;
 	pthread_mutex_unlock(&coder->left_dongle->lock);
 	pthread_mutex_unlock(&coder->right_dongle->lock);
+	pthread_cond_broadcast(&data->queue_control.cond);
 }
 
 int	try_take_dongle(t_dongle *dongle, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 09:41:33 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 11:36:25 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_queue_manager
 	t_queue			*first;
 	t_queue			*last;
 	pthread_mutex_t	lock;
+	pthread_cond_t	cond;
 }					t_queue_manager;
 
 typedef struct s_coder
@@ -137,6 +138,7 @@ int				destroy_mutex(t_data *data);
 // Simulation //
 void			*start_simulation(void *arg);
 void			*coder_goal(void *arg);
+int				take_dongle(t_coder *coder);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
 void			reset_dongle_cooldown(t_coder *coder, t_data *data);
 int				scheduler_fifo(t_data *data, t_coder *coder, char *action);

@@ -6,13 +6,12 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 09:42:13 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 11:44:40 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static int	take_dongle(t_coder *coder);
 static int	*do_action(t_coder *coder, char *action);
 
 void	*coder_goal(void *arg)
@@ -22,23 +21,17 @@ void	*coder_goal(void *arg)
 	coder = (t_coder *)arg;
 	while (get_simulation(coder->data) == 1 && coder->have_finished == 0)
 	{
-		if (take_dongle(coder) == 0)
-		{
-			set_burnout(coder);
-			do_action(coder, ACT_COMP);
-			do_action(coder, ACT_DEBUG);
-			do_action(coder, ACT_REFAC);
-		}
-		else
-		{
-			scheduler_fifo(coder->data, coder, ADD_QUEUE);
-			usleep(500);
-		}
+		scheduler_fifo(coder->data, coder, ADD_QUEUE);
+		set_burnout(coder);
+		do_action(coder, ACT_COMP);
+		scheduler_fifo(coder->data, coder, REMOVE_QUEUE);
+		do_action(coder, ACT_DEBUG);
+		do_action(coder, ACT_REFAC);
 	}
 	return (NULL);
 }
 
-static int	take_dongle(t_coder *coder)
+int	take_dongle(t_coder *coder)
 {
 	if (try_take_dongle(coder->left_dongle, coder->data) == 0)
 	{
