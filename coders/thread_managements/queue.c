@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 09:12:27 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 09:23:24 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:01:38 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	add_to_queue(t_queue_manager *manager, t_coder *coder_to_add)
 		return (1);
 	node->coder = coder_to_add;
 	node->next = NULL;
-	pthread_mutex_lock(&manager->lock);
 	if (manager->first == NULL)
 	{
 		manager->first = node;
@@ -32,7 +31,6 @@ int	add_to_queue(t_queue_manager *manager, t_coder *coder_to_add)
 		manager->last->next = node;
 		manager->last = node;
 	}
-	pthread_mutex_unlock(&manager->lock);
 	return (0);
 }
 
@@ -40,7 +38,6 @@ int	remove_from_queue(t_queue_manager *manager)
 {
 	t_queue	*temp;
 
-	pthread_mutex_lock(&manager->lock);
 	if (manager->first == NULL)
 		return (1);
 	temp = manager->first;
@@ -50,6 +47,5 @@ int	remove_from_queue(t_queue_manager *manager)
 		manager->last = NULL;
 	}
 	free (temp);
-	pthread_mutex_unlock(&manager->lock);
 	return (0);
 }
