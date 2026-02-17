@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue_fifo.c                                       :+:      :+:    :+:   */
+/*   scheduler.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 09:12:27 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:08:19 by roandrie         ###   ########.fr       */
+/*   Created: 2026/02/17 09:30:39 by roandrie          #+#    #+#             */
+/*   Updated: 2026/02/17 09:40:40 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	add_to_queue(t_queue_manager *manager, t_coder *coder_to_add)
+int	scheduler_fifo(t_data *data, t_coder *coder, char *action)
 {
-	t_queue	*node;
-
-	node = malloc(sizeof(t_queue));
-	if (node == NULL)
-		return (1);
-	node->coder = coder_to_add;
-	node->next = NULL;
-	pthread_mutex_lock(&manager->lock);
-	if (manager->first == NULL)
-	{
-		manager->first = node;
-		manager->last = node;
-	}
-	else
-	{
-		manager->last->next = node;
-		manager->last = node;
-	}
-	pthread_mutex_unlock(&manager->lock);
+	if (strcmp(action, ADD_QUEUE) == 0)
+		add_to_queue(&data->queue_control, &coder);
+	if (strcmp(action, REMOVE_QUEUE) == 0)
+		remove_from_queue(&data);
 	return (0);
 }

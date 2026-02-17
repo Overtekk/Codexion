@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:16:28 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 09:42:13 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	*coder_goal(void *arg)
 			do_action(coder, ACT_REFAC);
 		}
 		else
+		{
+			scheduler_fifo(coder->data, coder, ADD_QUEUE);
 			usleep(500);
+		}
 	}
 	return (NULL);
 }
@@ -39,6 +42,11 @@ static int	take_dongle(t_coder *coder)
 {
 	if (try_take_dongle(coder->left_dongle, coder->data) == 0)
 	{
+		if (coder->right_dongle == NULL)
+		{
+			pthread_mutex_unlock(&coder->left_dongle->lock);
+			return (1);
+		}
 		if (try_take_dongle(coder->right_dongle, coder->data) == 0)
 		{
 			print_logs(coder->id, coder->left_dongle->id, ACT_TAKE, coder->data);

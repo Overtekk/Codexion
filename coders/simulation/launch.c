@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:45:07 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 08:15:36 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,13 @@ void	*start_simulation(void *arg)
 		while (data->nbr_coders != index)
 		{
 			if (data->coder[index].have_finished == 1)
-			{
 				finish++;
-			}
 			else if ((get_time_ms() - data->coder[index].time_bournout) > data->burnout_max)
 			{
 				pthread_mutex_lock(&data->mutex_simu);
 				data->simulation_active = 0;
 				pthread_mutex_unlock(&data->mutex_simu);
 				print_logs(data->coder[index].id, 0, ACT_BURNS, data);
-				break;
 			}
 			if (finish == data->nbr_coders)
 			{

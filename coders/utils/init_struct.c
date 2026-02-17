@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/14 14:02:20 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 09:35:16 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static	void	create_coders_and_dongle(t_data *data);
 
 int	init_struct(int *value, t_data *data)
 {
-	data->coder = calloc(1, sizeof(t_coder) * value[0]);
+	data->coder = malloc(sizeof(t_coder) * value[0]);
 	if (data->coder == NULL)
 		return (print_error(STR_ERR_MALLOC, NULL, data));
-	data->dongle = calloc(1, sizeof(t_dongle) * value[0]);
+	data->dongle = malloc(sizeof(t_dongle) * value[0]);
 	if (data->dongle == NULL)
 		return (print_error(STR_ERR_MALLOC, NULL, data));
 	data->nbr_coders = value[0];
@@ -51,17 +51,22 @@ static void	create_coders_and_dongle(t_data *data)
 		data->coder[count].code_compiled = 0;
 		data->coder[count].have_finished = 0;
 		data->coder[count].data = data;
-		next_id = (count + 1) % data->nbr_coders;
-		if (count < next_id)
-        {
-            data->coder[count].left_dongle = &data->dongle[count];
-            data->coder[count].right_dongle = &data->dongle[next_id];
-        }
-        else
-        {
-            data->coder[count].left_dongle = &data->dongle[next_id];
-            data->coder[count].right_dongle = &data->dongle[count];
-        }
+		if (data->nbr_coders > 1)
+		{
+			next_id = (count + 1) % data->nbr_coders;
+			if (count < next_id)
+			{
+				data->coder[count].left_dongle = &data->dongle[count];
+				data->coder[count].right_dongle = &data->dongle[next_id];
+			}
+			else
+			{
+				data->coder[count].left_dongle = &data->dongle[next_id];
+				data->coder[count].right_dongle = &data->dongle[count];
+			}
+		}
+		else
+			data->coder[count].left_dongle = &data->dongle[count];
 		count++;
 	}
 	count = 0;

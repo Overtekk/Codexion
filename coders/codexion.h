@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:44:26 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/17 09:41:33 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define ACT_DEBUG		"debug"
 # define ACT_REFAC		"refac"
 # define ACT_BURNS		"burns_out"
+# define REMOVE_QUEUE	"remove_q"
+# define ADD_QUEUE		"add_q"
 
 // Max coders //
 # define MAX_CODERS 300
@@ -129,6 +131,7 @@ void			join_thread(t_data *data);
 int				init_mutex_for_dongle(t_data *data);
 int				init_mutex_print(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
+int				remove_from_queue(t_queue_manager *manager);
 int				destroy_mutex(t_data *data);
 
 // Simulation //
@@ -136,6 +139,7 @@ void			*start_simulation(void *arg);
 void			*coder_goal(void *arg);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
 void			reset_dongle_cooldown(t_coder *coder, t_data *data);
+int				scheduler_fifo(t_data *data, t_coder *coder, char *action);
 
 // Getter, Setter //
 int				get_simulation(t_data *data);
@@ -155,5 +159,7 @@ char			*print_usage(void);
 
 // Debug //
 void			debug_print_struct(t_data *data);
+void			debug_print_queue(t_queue_manager *manager);
+void			debug_test_add_queue(t_data *data, t_coder *coder);
 
 #endif
