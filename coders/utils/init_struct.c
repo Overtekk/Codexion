@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:48:05 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/18 11:39:34 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	create_coders_and_dongle(t_data *data);
 static void	fill_dongle_id(char *id_str, int index);
 static void	init_coders(t_data *data, t_coder *coder, int count);
+static void init_basic_data_coders(t_data *data, t_coder *coder, int count);
 
 int	init_struct(int *value, t_data *data)
 {
@@ -87,13 +88,7 @@ static void	init_coders(t_data *data, t_coder *coder, int count)
 {
 	int	next_id;
 
-	coder->id = count + 1;
-	coder->time_bournout = get_time_ms();
-	coder->code_compiled = 0;
-	coder->have_finished = 0;
-	coder->data = data;
-	coder->left_dongle = NULL;
-	coder->right_dongle = NULL;
+	init_basic_data_coders(data, coder, count);
 	if (data->nbr_coders > 1)
 	{
 		next_id = (count + 1) % data->nbr_coders;
@@ -110,4 +105,16 @@ static void	init_coders(t_data *data, t_coder *coder, int count)
 	}
 	else
 		coder->left_dongle = &data->dongle[count];
+}
+
+static void init_basic_data_coders(t_data *data, t_coder *coder, int count)
+{
+	coder->id = count + 1;
+	coder->time_bournout = get_time_ms();
+	coder->code_compiled = 0;
+	coder->have_finished = 0;
+	coder->last_compile_start = 0;
+	coder->data = data;
+	coder->left_dongle = NULL;
+	coder->right_dongle = NULL;
 }

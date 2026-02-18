@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/17 13:54:30 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/18 12:00:42 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ CFILES		=		main.c									\
 					thread_managements/create_mutex.c		\
 					thread_managements/destroy.c			\
 					thread_managements/queue.c				\
-					simulation/launch.c						\
+					simulation/monitoring.c					\
 					simulation/coder.c						\
 					simulation/logs.c						\
 					simulation/scheduler_fifo.c				\

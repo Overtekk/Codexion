@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 14:04:03 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/18 12:00:56 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_burns_out(t_data *data, int *finish);
 static void	stop_simulation(t_data *data);
 
-void	*start_simulation(void *arg)
+void	*monitoring_simulation(void *arg)
 {
 	t_data	*data;
 	int		finish;

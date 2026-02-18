@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/16 16:51:29 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/18 11:47:56 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_arg(char **arg, t_data *data)
 	}
 	if (init_struct(conv_arg, data) == 1)
 		return (1);
-	if (strcmp("fifo", arg[i]) == 0 || strcmp("edf", arg[i]) == 0)
+	if (strcmp(FIFO, arg[i]) == 0 || strcmp(EDF, arg[i]) == 0)
 		data->scheduler = arg[i];
 	else
 		return (print_error(STR_ERR_INV_ARG, arg[i], data));

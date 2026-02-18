@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:49:58 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/18 12:01:16 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 static int	*do_action(t_coder *coder, char *action);
 
-void	*coder_goal(void *arg)
+void	*coder_thread(void *arg)
 {
 	t_coder	*coder;
 
 	coder = (t_coder *)arg;
 	while (get_simulation(coder->data) == 1 && coder->have_finished == 0)
 	{
-		scheduler_fifo(coder->data, coder, ADD_QUEUE);
+		if (strcmp(coder->data->scheduler, FIFO) == 0)
+			scheduler_fifo(coder->data, coder, ADD_QUEUE);
+		else
+			continue;
 		set_burnout(coder);
 		do_action(coder, ACT_COMP);
-		scheduler_fifo(coder->data, coder, REMOVE_QUEUE);
+		if (strcmp(coder->data->scheduler, FIFO) == 0)
+			scheduler_fifo(coder->data, coder, REMOVE_QUEUE);
+		else
+			continue;
 		do_action(coder, ACT_DEBUG);
 		do_action(coder, ACT_REFAC);
 	}

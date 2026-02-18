@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:49:33 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/18 12:01:10 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@
 # define ADD_QUEUE		"add_q"
 
 // Max coders //
-# define MAX_CODERS 300
+# define MAX_CODERS 	300
+
+// Scheduler //
+# define FIFO			"fifo"
+# define EDF			"edf"
 
 // -------------------- //
 //		STRUCTURES		//
@@ -72,6 +76,7 @@ typedef struct s_queue_manager
 {
 	t_queue			*first;
 	t_queue			*last;
+	pthread_t		monitoring;
 	pthread_mutex_t	lock;
 	pthread_cond_t	cond;
 }					t_queue_manager;
@@ -85,9 +90,11 @@ typedef struct s_coder
 	int				id;
 	int				code_compiled;
 	int				have_finished;
+	int				last_compile_start;
 	pthread_t		thread_id;
 	pthread_mutex_t	mutex_burnout;
 	pthread_mutex_t	mutex_finish;
+	pthread_mutex_t	mutex_deadline;
 }					t_coder;
 
 typedef struct s_dongle
@@ -134,11 +141,12 @@ int				init_mutex_for_dongle(t_data *data);
 int				init_mutex(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
+void			*monitor_deadline(void *arg);
 int				destroy_mutex(t_data *data);
 
 // Simulation //
-void			*start_simulation(void *arg);
-void			*coder_goal(void *arg);
+void			*monitoring_simulation(void *arg);
+void			*coder_thread(void *arg);
 int				take_dongle(t_coder *coder);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
 void			reset_dongle_cooldown(t_coder *coder, t_data *data);
@@ -150,6 +158,7 @@ long long		get_burnout(t_coder *coder);
 void			set_burnout(t_coder *coder);
 int				get_have_finished(t_coder *coder);
 void			set_finished(t_coder *coder);
+int				get_deadline(t_coder *coder);
 
 // Logs //
 void			print_logs(int index, char *dongle_id, char *action,
