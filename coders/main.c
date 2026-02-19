@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:03:44 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/19 09:54:17 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 static int	init_mutex_thread(t_data *data)
 {
 	init_mutex_for_dongle(data);
-	init_mutex(data);
+	init_mutex_and_cond(data);
 	init_thread(data);
 	return (0);
 }

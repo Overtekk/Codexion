@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 16:35:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 10:58:45 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/19 11:03:05 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	destroy_mutex(t_data *data)
 	pthread_mutex_destroy(&data->mutex_print);
 	pthread_mutex_destroy(&data->mutex_simu);
 	pthread_mutex_destroy(&data->queue_control.lock);
+	pthread_mutex_destroy(&data->heap_control.lock);
 	pthread_cond_destroy(&data->queue_control.cond);
+	pthread_cond_destroy(&data->heap_control.cond);
 	return (0);
 }

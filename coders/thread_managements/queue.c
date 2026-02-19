@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 09:12:27 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 12:34:36 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/19 11:39:12 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,9 @@ int	remove_from_queue(t_queue_manager *manager)
 	temp = manager->first;
 	manager->first = temp->next;
 	if (manager->first == NULL)
-	{
 		manager->last = NULL;
-	}
 	free (temp);
 	return (0);
 }
 
-void	*monitor_deadline(void *arg)
-{
-	t_queue_manager	*manager;
 
-	manager = (t_queue_manager *)arg;
-}

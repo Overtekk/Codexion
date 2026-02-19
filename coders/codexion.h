@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 12:01:10 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/19 09:56:20 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_coder			t_coder;
 typedef struct s_dongle			t_dongle;
 typedef struct s_queue			t_queue;
 typedef struct s_queue_manager	t_queue_manager;
+typedef struct s_heap			t_heap;
 
 typedef struct s_queue
 {
@@ -76,10 +77,17 @@ typedef struct s_queue_manager
 {
 	t_queue			*first;
 	t_queue			*last;
-	pthread_t		monitoring;
 	pthread_mutex_t	lock;
 	pthread_cond_t	cond;
 }					t_queue_manager;
+
+typedef struct s_heap
+{
+	t_coder			*tree[MAX_CODERS];
+	int				size;
+	pthread_mutex_t	lock;
+	pthread_cond_t	cond;
+}					t_heap;
 
 typedef struct s_coder
 {
@@ -109,6 +117,8 @@ typedef struct s_data
 {
 	t_coder			*coder;
 	t_dongle		*dongle;
+	t_heap			heap_control;
+	t_queue_manager	queue_control;
 	long long		burnout_max;
 	long long		time_comp;
 	long long		time_debug;
@@ -121,7 +131,6 @@ typedef struct s_data
 	int				nbr_dongle;
 	int				simulation_active;
 	pthread_t		monitoring_id;
-	t_queue_manager	queue_control;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_simu;
 }					t_data;
@@ -138,10 +147,9 @@ int				init_struct(int *value, t_data *data);
 void			init_thread(t_data *data);
 void			join_thread(t_data *data);
 int				init_mutex_for_dongle(t_data *data);
-int				init_mutex(t_data *data);
+int				init_mutex_and_cond(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
-void			*monitor_deadline(void *arg);
 int				destroy_mutex(t_data *data);
 
 // Simulation //
