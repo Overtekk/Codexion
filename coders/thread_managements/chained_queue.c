@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 09:12:27 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 09:31:27 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 19:18:15 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,3 @@ int	remove_from_queue(t_queue_manager *manager)
 	free (temp);
 	return (0);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 13:49:51 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 19:23:12 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	memset(&data, 0, sizeof(t_data));
 	if (argc != 9)
 		return (print_error(print_usage(), NULL, &data));
-	if (check_arg(argv, &data) == 1)
+	if (check_arg(&data, argv) == 1)
 		return (1);
 	init_mutex(&data);
 	init_thread(&data);

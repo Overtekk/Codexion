@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 09:26:58 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 19:35:40 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,12 @@
 static void	create_coders_and_dongle(t_data *data);
 static void	fill_dongle_id(char *id_str, int index);
 static void	init_coders(t_data *data, t_coder *coder, int count);
-static void init_basic_data_coders(t_data *data, t_coder *coder, int count);
+static void	init_basic_data_coders(t_data *data, t_coder *coder, int count);
 
-int	init_struct(int *value, t_data *data)
+int	init_struct(t_data *data)
 {
 	int	i;
 
-	data->coder = malloc(sizeof(t_coder) * value[0]);
-	if (data->coder == NULL)
-		return (print_error(STR_ERR_MALLOC, NULL, data));
-	data->dongle = malloc(sizeof(t_dongle) * value[0]);
-	if (data->dongle == NULL)
-		return (print_error(STR_ERR_MALLOC, NULL, data));
-	data->nbr_coders = value[0];
-	data->nbr_dongle = value[0];
-	data->burnout_max = value[1];
-	data->time_comp = value[2];
-	data->time_debug = value[3];
-	data->time_refac = value[4];
-	data->compile_required = value[5];
-	data->dongle_cooldown = value[6];
 	data->simulation_active = 1;
 	data->start_time = get_time_ms();
 	data->queue_control.first = NULL;
@@ -58,11 +44,6 @@ static void	create_coders_and_dongle(t_data *data)
 	while (data->nbr_coders != count)
 	{
 		init_coders(data, &data->coder[count], count);
-		count++;
-	}
-	count = 0;
-	while (data->nbr_dongle != count)
-	{
 		fill_dongle_id(data->dongle[count].id, count);
 		data->dongle[count].cooldown = 0;
 		data->dongle[count].data = data;
@@ -116,7 +97,7 @@ static void	init_coders(t_data *data, t_coder *coder, int count)
 		coder->left_dongle = &data->dongle[count];
 }
 
-static void init_basic_data_coders(t_data *data, t_coder *coder, int count)
+static void	init_basic_data_coders(t_data *data, t_coder *coder, int count)
 {
 	coder->id = count + 1;
 	coder->time_bournout = get_time_ms();
