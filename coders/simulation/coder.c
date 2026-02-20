@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 11:28:02 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 14:08:27 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	*coder_thread(void *arg)
 		do_action(coder, ACT_COMP);
 		if (is_fifo(coder->data))
 			scheduler_fifo(coder->data, coder, REMOVE_QUEUE);
-		else
-			scheduler_edf_remove(coder->data);
 		do_action(coder, ACT_DEBUG);
 		do_action(coder, ACT_REFAC);
 	}

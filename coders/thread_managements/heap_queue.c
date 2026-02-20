@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:31:51 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 10:39:40 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:38:41 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	heap_push(t_heap *manager, t_coder *coder)
 {
 	int	i;
 
-	pthread_mutex_lock(&manager->lock);
 	i = manager->size;
 	manager->tree[i] = coder;
 	manager->size += 1;
@@ -33,7 +32,6 @@ void	heap_push(t_heap *manager, t_coder *coder)
 		else
 			break ;
 	}
-	pthread_mutex_unlock(&manager->lock);
 }
 
 t_coder	*heap_pop(t_heap *manager)
@@ -44,12 +42,8 @@ t_coder	*heap_pop(t_heap *manager)
 	int		left;
 	int		i;
 
-	pthread_mutex_lock(&manager->lock);
 	if (manager->size == 0)
-	{
-		pthread_mutex_unlock(&manager->lock);
 		return (NULL);
-	}
 	i = 0;
 	save = manager->tree[i];
 	manager->tree[i] = manager->tree[manager->size - 1];
@@ -69,7 +63,6 @@ t_coder	*heap_pop(t_heap *manager)
 		else
 			break ;
 	}
-	pthread_mutex_unlock(&manager->lock);
 	return (save);
 }
 

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 11:15:27 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 14:09:25 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,18 +139,19 @@ typedef struct s_data
 //		PROTOTYPES		//
 // -------------------- //
 
-// Arguments, Malloc, Init structures //
+// Parsing //
 int				check_arg(char **arg, t_data *data);
 int				init_struct(int *value, t_data *data);
 
 // Threads, mutex management //
 void			init_thread(t_data *data);
 void			join_thread(t_data *data);
-int				init_mutex_for_dongle(t_data *data);
-int				init_mutex_and_cond(t_data *data);
+void			init_mutex(t_data *data);
+void			destroy_mutex(t_data *data);
+
+// Queue, heap management //
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
-int				destroy_mutex(t_data *data);
 void			heap_push(t_heap *manager, t_coder *coder);
 t_coder			*heap_pop(t_heap *manager);
 
@@ -162,7 +163,6 @@ int				try_take_dongle(t_dongle *dongle, t_data *data);
 void			release_dongles(t_coder *coder, t_data *data);
 int				scheduler_fifo(t_data *data, t_coder *coder, char *action);
 void			scheduler_edf_add(t_data *data, t_coder *coder);
-void			scheduler_edf_remove(t_data *data);
 
 // Getter, Setter //
 int				get_simulation(t_data *data);

@@ -6,13 +6,11 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:16:12 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/19 09:54:17 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:49:51 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-static int	init_mutex_thread(t_data *data);
 
 int	main(int argc, char **argv)
 {
@@ -23,18 +21,10 @@ int	main(int argc, char **argv)
 		return (print_error(print_usage(), NULL, &data));
 	if (check_arg(argv, &data) == 1)
 		return (1);
-	if (init_mutex_thread(&data) == 1)
-		return (1);
+	init_mutex(&data);
+	init_thread(&data);
 	join_thread(&data);
 	destroy_mutex(&data);
 	free_memory(&data);
-	return (0);
-}
-
-static int	init_mutex_thread(t_data *data)
-{
-	init_mutex_for_dongle(data);
-	init_mutex_and_cond(data);
-	init_thread(data);
 	return (0);
 }
