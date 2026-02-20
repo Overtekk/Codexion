@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 14:08:27 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 20:39:15 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	take_dongle(t_coder *coder)
 	if (try_take_dongle(coder->left_dongle, coder->data) == 0)
 	{
 		if (coder->right_dongle == NULL)
-			return (0);
+		{
+			pthread_mutex_unlock(&coder->left_dongle->lock);
+			return (1);
+		}
 		if (try_take_dongle(coder->right_dongle, coder->data) == 0)
 		{
 			print_logs(coder->id, coder->left_dongle->id, ACT_TAKE,
