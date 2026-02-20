@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 14:09:25 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:45:35 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void			destroy_mutex(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
 void			heap_push(t_heap *manager, t_coder *coder);
-t_coder			*heap_pop(t_heap *manager);
+void			heap_pop(t_heap *manager, t_coder *coder);
 
 // Simulation //
 void			*monitoring_simulation(void *arg);
