@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 13:37:03 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 11:40:06 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 10:13:22 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,4 @@ int	get_have_finished(t_coder *coder)
 	finished = coder->have_finished;
 	pthread_mutex_unlock(&coder->mutex_finish);
 	return (finished);
-}
-
-int	get_deadline(t_coder *coder)
-{
-	int	deadline;
-
-	deadline = 0;
-	pthread_mutex_lock(&coder->mutex_deadline);
-	deadline = coder->last_compile_start + coder->time_bournout;
-	pthread_mutex_unlock(&coder->mutex_deadline);
-	return (deadline);
 }

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:46:33 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 11:39:34 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 09:26:58 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void init_basic_data_coders(t_data *data, t_coder *coder, int count);
 
 int	init_struct(int *value, t_data *data)
 {
+	int	i;
+
 	data->coder = malloc(sizeof(t_coder) * value[0]);
 	if (data->coder == NULL)
 		return (print_error(STR_ERR_MALLOC, NULL, data));
@@ -37,6 +39,13 @@ int	init_struct(int *value, t_data *data)
 	data->start_time = get_time_ms();
 	data->queue_control.first = NULL;
 	data->queue_control.last = NULL;
+	data->heap_control.size = 0;
+	i = 0;
+	while (i < MAX_CODERS)
+	{
+		data->heap_control.tree[i] = NULL;
+		i++;
+	}
 	create_coders_and_dongle(data);
 	return (0);
 }

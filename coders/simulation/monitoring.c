@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:37:16 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/18 12:00:56 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:00:14 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ static void	stop_simulation(t_data *data)
 	pthread_mutex_lock(&data->mutex_simu);
 	data->simulation_active = 0;
 	pthread_mutex_unlock(&data->mutex_simu);
-	pthread_cond_broadcast(&data->queue_control.cond);
+	if (is_fifo(data))
+		pthread_cond_broadcast(&data->queue_control.cond);
+	else
+		pthread_cond_broadcast(&data->heap_control.cond);
 }

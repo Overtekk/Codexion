@@ -6,7 +6,7 @@
 #    By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 16:58:06 by roandrie          #+#    #+#              #
-#    Updated: 2026/02/19 11:16:14 by roandrie         ###   ########.fr        #
+#    Updated: 2026/02/20 11:26:29 by roandrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ OBJ_DIR		=		obj
 
 CFILES		=		main.c									\
 					utils/check_arguments.c					\
+					utils/check_scheduler.c					\
 					utils/init_struct.c						\
 					utils/exit.c							\
 					utils/check_time.c						\
@@ -33,12 +34,14 @@ CFILES		=		main.c									\
 					thread_managements/create_thread.c		\
 					thread_managements/create_mutex.c		\
 					thread_managements/destroy.c			\
-					thread_managements/queue.c				\
+					thread_managements/chained_queue.c		\
+					thread_managements/heap_queue.c			\
 					simulation/monitoring.c					\
 					simulation/coder.c						\
 					simulation/logs.c						\
 					simulation/scheduler_fifo.c				\
-					simulation/utils/dongles_management.c	\
+					simulation/scheduler_edf.c				\
+					simulation/dongles_management.c			\
 					debug/print_struct.c					\
 					debug/print_queue.c
 

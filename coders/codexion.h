@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/19 09:56:20 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 11:15:27 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,18 @@ int				init_mutex_and_cond(t_data *data);
 int				add_to_queue(t_queue_manager *manager, t_coder *coder_to_add);
 int				remove_from_queue(t_queue_manager *manager);
 int				destroy_mutex(t_data *data);
+void			heap_push(t_heap *manager, t_coder *coder);
+t_coder			*heap_pop(t_heap *manager);
 
 // Simulation //
 void			*monitoring_simulation(void *arg);
 void			*coder_thread(void *arg);
 int				take_dongle(t_coder *coder);
 int				try_take_dongle(t_dongle *dongle, t_data *data);
-void			reset_dongle_cooldown(t_coder *coder, t_data *data);
+void			release_dongles(t_coder *coder, t_data *data);
 int				scheduler_fifo(t_data *data, t_coder *coder, char *action);
+void			scheduler_edf_add(t_data *data, t_coder *coder);
+void			scheduler_edf_remove(t_data *data);
 
 // Getter, Setter //
 int				get_simulation(t_data *data);
@@ -166,7 +170,6 @@ long long		get_burnout(t_coder *coder);
 void			set_burnout(t_coder *coder);
 int				get_have_finished(t_coder *coder);
 void			set_finished(t_coder *coder);
-int				get_deadline(t_coder *coder);
 
 // Logs //
 void			print_logs(int index, char *dongle_id, char *action,
@@ -175,6 +178,7 @@ void			print_logs(int index, char *dongle_id, char *action,
 // Functionalities //
 long long		get_time_ms(void);
 long long		get_sim_time(t_data *data);
+int				is_fifo(t_data *data);
 int				print_error(char *str, char *details, t_data *data);
 void			free_memory(t_data *data);
 char			*print_usage(void);

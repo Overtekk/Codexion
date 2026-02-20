@@ -6,22 +6,27 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 09:57:07 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:50:41 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 11:27:01 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	reset_dongle_cooldown(t_coder *coder, t_data *data)
+void	release_dongles(t_coder *coder, t_data *data)
 {
 	long long	curr_time;
 
 	curr_time = get_sim_time(data);
 	coder->left_dongle->cooldown = curr_time + data->dongle_cooldown;
-	coder->right_dongle->cooldown = curr_time + data->dongle_cooldown;
+	if (coder->right_dongle != NULL)
+		coder->right_dongle->cooldown = curr_time + data->dongle_cooldown;
 	pthread_mutex_unlock(&coder->left_dongle->lock);
-	pthread_mutex_unlock(&coder->right_dongle->lock);
-	pthread_cond_broadcast(&data->queue_control.cond);
+	if (coder->right_dongle != NULL)
+		pthread_mutex_unlock(&coder->right_dongle->lock);
+	if (is_fifo(data))
+		pthread_cond_broadcast(&data->queue_control.cond);
+	else
+		pthread_cond_broadcast(&data->heap_control.cond);
 }
 
 int	try_take_dongle(t_dongle *dongle, t_data *data)

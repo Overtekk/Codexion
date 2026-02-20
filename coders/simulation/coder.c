@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/19 11:21:19 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/20 11:28:02 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ void	*coder_thread(void *arg)
 	coder = (t_coder *)arg;
 	while (get_simulation(coder->data) == 1 && coder->have_finished == 0)
 	{
-		if (strcmp(coder->data->scheduler, FIFO) == 0)
+		if (is_fifo(coder->data))
 			scheduler_fifo(coder->data, coder, ADD_QUEUE);
 		else
-			continue;
-		set_burnout(coder);
+			scheduler_edf_add(coder->data, coder);
 		do_action(coder, ACT_COMP);
-		if (strcmp(coder->data->scheduler, FIFO) == 0)
+		if (is_fifo(coder->data))
 			scheduler_fifo(coder->data, coder, REMOVE_QUEUE);
 		else
-			continue;
+			scheduler_edf_remove(coder->data);
 		do_action(coder, ACT_DEBUG);
 		do_action(coder, ACT_REFAC);
 	}
@@ -42,10 +41,7 @@ int	take_dongle(t_coder *coder)
 	if (try_take_dongle(coder->left_dongle, coder->data) == 0)
 	{
 		if (coder->right_dongle == NULL)
-		{
-			pthread_mutex_unlock(&coder->left_dongle->lock);
-			return (1);
-		}
+			return (0);
 		if (try_take_dongle(coder->right_dongle, coder->data) == 0)
 		{
 			print_logs(coder->id, coder->left_dongle->id, ACT_TAKE,
@@ -69,12 +65,13 @@ static int	*do_action(t_coder *coder, char *action)
 		return (NULL);
 	else if (strcmp(action, ACT_COMP) == 0)
 	{
+		set_burnout(coder);
 		print_logs(coder->id, 0, ACT_COMP, coder->data);
 		usleep(coder->data->time_comp * 1000);
 		coder->code_compiled += 1;
 		if (coder->code_compiled >= coder->data->compile_required)
 			set_finished(coder);
-		reset_dongle_cooldown(coder, coder->data);
+		release_dongles(coder, coder->data);
 		coder->last_compile_start = get_sim_time(coder->data);
 	}
 	else if (strcmp(action, ACT_DEBUG) == 0)
