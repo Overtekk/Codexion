@@ -76,6 +76,36 @@ case "$1" in
 	toomany_compiler)
 		run_test toomany_compiler "999 1000 200 200 200 5 50 fifo"
 		;;
+	error_arg1)
+		run_test error_coder "banana 200 300 400 500 5 10 fifo"
+		;;
+	error_arg2)
+		run_test error_coder "10 banana 300 400 500 5 10 fifo"
+		;;
+	error_arg3)
+		run_test error_coder "10 200 banana 400 500 5 10 fifo"
+		;;
+	error_arg4)
+		run_test error_coder "10 200 300 banana 500 5 10 fifo"
+		;;
+	error_arg5)
+		run_test error_coder "10 200 300 400 banana 5 10 fifo"
+		;;
+	error_arg6)
+		run_test error_coder "10 200 300 400 500 banana 10 fifo"
+		;;
+	error_arg7)
+		run_test error_coder "10 200 300 400 500 5 banana fifo"
+		;;
+	error_arg8)
+		run_test error_coder "10 200 300 400 500 5 10 banana"
+		;;
+	error_arg9)
+		run_test error_coder "10 200 300 -400 500 5 10 edf"
+		;;
+	error_arg10)
+		run_test error_coder "too 10 200 300 400 500 5 10 edf"
+		;;
 	*)
 		echo -e "${RED}Unkown test.${NC}"
 		;;

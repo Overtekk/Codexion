@@ -6,13 +6,13 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 11:29:15 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/13 11:05:19 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:26:56 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void			free_memory(t_data *data);
+void	free_memory(t_data *data);
 
 int	print_error(char *str, char *details, t_data *data)
 {
@@ -27,10 +27,20 @@ int	print_error(char *str, char *details, t_data *data)
 
 void	free_memory(t_data *data)
 {
+	t_queue	*curr;
+	t_queue	*next;
+
+	curr = data->queue_control.first;
 	if (data->coder != NULL)
 		free(data->coder);
 	if (data->dongle != NULL)
 		free(data->dongle);
+	while (curr != NULL)
+	{
+		next = curr->next;
+		free(curr);
+		curr = next;
+	}
 }
 
 char	*print_usage(void)
