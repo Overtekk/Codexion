@@ -6,13 +6,21 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 10:40:41 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 20:53:21 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 16:20:11 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 static int	is_priority(t_data *data, t_coder *coder);
+
+/**
+ * Adds a coder to the EDF scheduling system.
+ *
+ * Pushes the coder into the min-heap priority queue. The thread then waits
+ * until it gains local priority over its neighbors to take the dongles.
+ * Once successful, it removes itself from the heap.
+ */
 
 void	scheduler_edf_add(t_data *data, t_coder *coder)
 {
@@ -37,6 +45,14 @@ void	scheduler_edf_add(t_data *data, t_coder *coder)
 	pthread_cond_broadcast(&controler->cond);
 	pthread_mutex_unlock(&controler->lock);
 }
+
+/**
+ * Checks if the coder has priority over its immediate neighbors.
+ *
+ * Evaluates the burnout deadlines of the current coder and its left/right
+ * neighbors. If a neighbor has an earlier deadline, priority is denied to
+ * allow the neighbor to go first and prevent burnout.
+ */
 
 static int	is_priority(t_data *data, t_coder *coder)
 {

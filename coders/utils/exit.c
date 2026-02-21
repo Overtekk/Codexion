@@ -6,13 +6,17 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 11:29:15 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/21 15:26:56 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:31:43 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 void	free_memory(t_data *data);
+
+/**
+ * Prints a custom error message to the standard error output and free memory.
+ */
 
 int	print_error(char *str, char *details, t_data *data)
 {
@@ -24,6 +28,10 @@ int	print_error(char *str, char *details, t_data *data)
 	fprintf(stderr, "\n");
 	return (1);
 }
+
+/**
+ * Free memory of structure if there are not empty.
+ */
 
 void	free_memory(t_data *data)
 {
@@ -42,6 +50,10 @@ void	free_memory(t_data *data)
 		curr = next;
 	}
 }
+
+/**
+ * Print a custom message used to tell the user how to launch the program.
+ */
 
 char	*print_usage(void)
 {

@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:21:24 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 19:22:35 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 16:34:04 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,9 @@ typedef struct s_coder
 	int				id;
 	int				code_compiled;
 	int				have_finished;
-	int				last_compile_start;
 	pthread_t		thread_id;
 	pthread_mutex_t	mutex_burnout;
 	pthread_mutex_t	mutex_finish;
-	pthread_mutex_t	mutex_deadline;
 }					t_coder;
 
 typedef struct s_dongle
@@ -186,6 +184,5 @@ char			*print_usage(void);
 // Debug //
 void			debug_print_struct(t_data *data);
 void			debug_print_queue(t_queue_manager *manager);
-void			debug_test_add_queue(t_data *data, t_coder *coder);
 
 #endif

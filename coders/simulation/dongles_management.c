@@ -6,11 +6,16 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 09:57:07 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 20:37:14 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 16:26:25 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+/**
+ * Unlock the dongle and put it in cooldown. Then, broadcast to each coder in
+ * the queue to unlock them so they can try to take the dongle.
+ */
 
 void	release_dongles(t_coder *coder, t_data *data)
 {
@@ -28,6 +33,12 @@ void	release_dongles(t_coder *coder, t_data *data)
 	else
 		pthread_cond_broadcast(&data->heap_control.cond);
 }
+
+/**
+ * Check if the specific dongle is no more in cooldown using the get_sim_time
+ * function. Return '0' (False) is the dongle is still in cooldown. '1' (True)
+ * otherwise.
+ */
 
 int	try_take_dongle(t_dongle *dongle, t_data *data)
 {

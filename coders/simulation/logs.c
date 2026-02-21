@@ -6,11 +6,17 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:03:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 13:50:56 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 16:21:41 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+/**
+ * Print each action from a coder in the log in a specific format:
+ * timestamp_im_ms "coder" "action"
+ * Protected with a mutex to prevent mixed logs.
+ */
 
 void	print_logs(int index, char *dongle_id, char *action, t_data *data)
 {

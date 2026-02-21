@@ -6,13 +6,23 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:40:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 20:39:15 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 16:34:27 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 static int	*do_action(t_coder *coder, char *action);
+
+/**
+ * Main thread for each coder. Active still the simulation is going and they
+ * are not finished the number of coding requiered.
+ *
+ * First, a coder will add itself to the queue (either 'fifo' or 'edf'). They
+ * try to compile. If it can't, it will wait until it can or the simulation have
+ * finished. If he can take to dongle, it will start compiling for x time. Then,
+ * put the dongle and start debugging, then refactoring and so one.
+ */
 
 void	*coder_thread(void *arg)
 {
@@ -33,6 +43,14 @@ void	*coder_thread(void *arg)
 	}
 	return (NULL);
 }
+
+/**
+ * This function allow a coder to try to take the left dongle if possible. If
+ * he can't, the function return '1' (False). Otherwise, the coder will try to
+ * take the right dongle (if exist). If he can't, the function return '1'
+ * (False). Otherwise, each dongles are locked and printed into the log. The
+ * function return '0' (Success).
+ */
 
 int	take_dongle(t_coder *coder)
 {
@@ -60,6 +78,15 @@ int	take_dongle(t_coder *coder)
 	return (1);
 }
 
+/**
+ * This function will perform action for a specific coder. For debugging and
+ * refactoring, the coder will juste print it to the log and sleep x time.
+ * For the compiling action, first, the coder burnout will be reset. Then,
+ * the action will be printed to the log and the coder will sleep x time.
+ * If a coder have compiling x number of time, he can stop. Otherwise, he will
+ * release the dongle and continue.
+ */
+
 static int	*do_action(t_coder *coder, char *action)
 {
 	if (get_simulation(coder->data) == 0)
@@ -73,7 +100,6 @@ static int	*do_action(t_coder *coder, char *action)
 		if (coder->code_compiled >= coder->data->compile_required)
 			set_finished(coder);
 		release_dongles(coder, coder->data);
-		coder->last_compile_start = get_sim_time(coder->data);
 	}
 	else if (strcmp(action, ACT_DEBUG) == 0)
 	{

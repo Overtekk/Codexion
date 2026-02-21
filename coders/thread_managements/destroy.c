@@ -6,7 +6,7 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 16:35:21 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 14:11:06 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:53:58 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&data->dongle[index].lock);
 		pthread_mutex_destroy(&data->coder[index].mutex_burnout);
 		pthread_mutex_destroy(&data->coder[index].mutex_finish);
-		pthread_mutex_destroy(&data->coder[index].mutex_deadline);
 		index++;
 	}
 	pthread_mutex_destroy(&data->mutex_print);

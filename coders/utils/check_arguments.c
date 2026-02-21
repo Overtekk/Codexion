@@ -6,13 +6,20 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:45:35 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/20 19:38:26 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:36:14 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 static int	parse_data(t_data *data, int *arg);
+
+/**
+ * Verify that arguments provided by the user are correct, meaning : only
+ * integer (except for scheduler that accept either 'fifo' or 'edf',
+ * case-sensitive.), greater than 0 and that there are only 8 arguments.
+ * Then, parse data and init all structures with provided informations.
+ */
 
 int	check_arg(t_data *data, char **arg)
 {
@@ -40,6 +47,11 @@ int	check_arg(t_data *data, char **arg)
 		return (print_error(STR_ERR_INV_ARG, arg[i], data));
 	return (0);
 }
+
+/**
+ * Parse data provided by user into the data structure. Initialize memory for
+ * coders and dongles.
+ */
 
 static int	parse_data(t_data *data, int *arg)
 {

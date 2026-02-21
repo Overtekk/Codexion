@@ -6,11 +6,15 @@
 /*   By: roandrie <roandrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 08:36:58 by roandrie          #+#    #+#             */
-/*   Updated: 2026/02/17 08:56:19 by roandrie         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:51:26 by roandrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+/**
+ * Debug function to print the current queue of the program.
+ */
 
 void	debug_print_queue(t_queue_manager *manager)
 {
@@ -25,10 +29,4 @@ void	debug_print_queue(t_queue_manager *manager)
 		count++;
 		current = current->next;
 	}
-}
-
-void	debug_test_add_queue(t_data *data, t_coder *coder)
-{
-	add_to_queue(&data->queue_control, &coder[0]);
-	add_to_queue(&data->queue_control, &coder[1]);
 }
