@@ -20,20 +20,32 @@
 - **Academic Integrity:** I encourage you to try the project yourself first. Use this repo only as a reference, not for copy-pasting. Be patient, you will succeed.
 
 ---
+<br>
 
 ## ✏️ Quick Start
 
+### Compile the project:
 ```bash
 make
 ```
 
+### Run manually:
 ```bash
-./codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler
-
-# Alternatly, you can use my script by using:
-./tester.sh 1	# valid [1, 2, 3 ...], you can also put mem after to check the memory.
+./codexion <number_of_coders> <time_to_burnout> <time_to_compile> <time_to_debug> <time_to_refactor> <number_of_compiles_required> <dongle_cooldown> <scheduler>
 ```
+
+#### Using the Tester Script:
+A tester.sh script is provided to run predefined scenarios.
+```bash
+./tester.sh <test_id> [mem]
+```
+- `test_id`: Can be a number (1 to 6) or specific case names like `starvation2`, `large_edf`, `one_compiler_edf`, `big`.
+- `mem` (optional): Runs the test with Valgrind to check for memory leaks.
+
+*Example:* `./tester.sh starvation2 mem`
+
 ---
+<br>
 
 ## 📂 Description
 ### 📜 Summary:
@@ -102,6 +114,8 @@ The burnout log must be printed **within 10 ms** of the actual burnout time.
 |dongle_cooldown|>=1|Time before a dongle can be used again||
 |scheduler|`fifo` or `edf`|The arbitratin policy used by dongles||
 
+<br>
+
 ### 📮 Makefile:
 
 Makefile need to have those rules:
@@ -113,6 +127,8 @@ Makefile need to have those rules:
 
 It must not relink.
 
+<br>
+
 ### 🏷️ Authorized Functions:
 
 |Thread managements|Mutex|Thread cond|Memory management|Printing|Other|
@@ -122,6 +138,8 @@ It must not relink.
 ||pthread_mutex_unlock|pthread_cond_timedwait|memset|printf|strcmp|
 ||pthread_mutex_destroy|pthread_cond_broadcast|||strlen|
 |||pthread_cond_destroy|||atoi|
+
+<br>
 
 ### 💻 Logs:
 
@@ -144,24 +162,45 @@ Rules:
 
 ## 💡 Instructions
 
-1. First, clone this repository:
-```bash
-git clone https://github.com/Overtekk/
-```
-
-2. Compile using make:
+### 1. Compile the project:
 ```bash
 make
 ```
 
-3. Run the program:
+### 2. Run manually:
 ```bash
-# time is in ms
-./codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler
-
-# Alternatly, you can use my script by using:
-./tester.sh 1	# valid [1, 2, 3 ...], you can also put mem after to check the memory.
+./codexion <number_of_coders> <time_to_burnout> <time_to_compile> <time_to_debug> <time_to_refactor> <number_of_compiles_required> <dongle_cooldown> <scheduler>
 ```
+
+### Or Use the Tester Script:
+A tester.sh script is provided to run predefined scenarios.
+```bash
+./tester.sh <test_id> [mem]
+```
+- `test_id`: Can be a number (1 to 6) or specific case names like `starvation2`, `large_edf`, `one_compiler_edf`, `big`.
+- `mem` (optional): Runs the test with Valgrind to check for memory leaks.
+
+*Example:* `./tester.sh starvation2 mem`
+
+|ID|Summary|
+|--|:-----:|
+|1|Basic test with 'fifo' scheduler|
+|2|Basic test with 'edf' scheduler|
+|3|Test that will success under 'fifo' scheduler|
+|4|Test that will success under 'edf' scheduler (20 coders)|
+|5|Test with a very low cooldown|
+|6|Test with very long actions|
+|big|Test with 100 coders and quick cooldown|
+|starvation|Large burnout timer but compiling is at 600|
+|starvation2|Same that 'starvation' but with 'edf' scheduler|
+|one_compiler_fifo|Test with only one compiler|
+|one_compiler_edf|Test with only one compiler|
+|zero_compile|Test with zero compilation requiered|
+|immediate_burnout|Test with a burnout to 1|
+|cooldown_hell|Test with a big cooldown for dongle|
+|max_coders|Test with 300 coders (max)|
+|toomany_compiler|Test with too many compilers|
+|error_arg<1-10>|Many test to test each arguments (goes to 1 from 10)|
 
 ---
 
@@ -171,13 +210,30 @@ A **thread** is a lightweight unit of execution that enables multiple tasks to r
 
 ---
 
+## 🐨 How it works?
+
+1. **Initialization**: The main process allocates memory, initializes mutexes for shared variables and dongles, and creates the priority structures (Queue for FIFO, Min-Heap for EDF).
+2. **Execution**: Each coder is launched as an independent thread (`pthread_create`). They enter an infinite loop of computing phases: waiting for scheduler approval, taking dongles, compiling, debugging, and refactoring.
+3. **Scheduling Policy**: Before taking dongles, a coder must be authorized by the scheduler. EDF uses a "local priority" system where a coder yields if its immediate neighbors have a more urgent burnout deadline.
+4. **Monitoring & Cleanup**: A detached monitor thread continuously checks the timestamp of each coder's last compiling. If `time_to_burnout` is exceeded, the monitor flags the simulation as stopped, broadcasts a signal to wake up all sleeping threads, and allows the main process to join threads and free all allocated memory cleanly.
+
+<br>
+
+I used Min-Heap for EDF because the subject requiered it but also because it's more easy to implement this type of priority queue. Comparison are simple and move a coder too.
+For the FIFO, I used a simple linked list because the first to go in will the... the first one, and go one. It was more easy to build it that way either for managing thread, either for building the functions.
+
+---
+<br>
+
 ## 🛸 Blocking cases handled
 
 ---
+<br>
 
 ## 🕛 Thread synchronization mechanisms
 
 ---
+<br>
 
 ## 📚 Resources
 
@@ -190,6 +246,12 @@ A **thread** is a lightweight unit of execution that enables multiple tasks to r
 - https://stackoverflow.com/questions/8253278/message-passing-between-threads-in-c
 - https://stackoverflow.com/questions/10721148/how-to-implement-thread-safe-queues
 - https://sites.uclouvain.be/SyllabusC/notes/Theorie/Threads/threads2.html
+
+#### Min-Heap:
+- https://www.geeksforgeeks.org/dsa/introduction-to-min-heap-data-structure/
+- https://www.geeksforgeeks.org/c/c-program-to-implement-min-heap/
+- https://www.w3resource.com/c-programming-exercises/heap/c-heap-exercises-3.php
+- https://en.wikipedia.org/wiki/Min-max_heap
 
 
 <br>
