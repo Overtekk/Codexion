@@ -227,10 +227,29 @@ For the FIFO, I used a simple linked list because the first to go in will the...
 
 ## 🛸 Blocking cases handled
 
+Concurrency introduces several critical issues that must be addressed to guarantee the liveness of the simulation.
+
+- **Deadlock Prevention & Coffman's Conditions**: Deadlocks occur when circular wait conditions are met. This is prevented through an asymmetric allocation strategy. The last coder in the circle attempts to take the right dongle before the left one, breaking the circular wait. Additionally, the `take_dongle` function uses a fallback mechanism: if the first dongle is acquired but the second is locked, the thread releases the first dongle and yields, preventing it from holding resources indefinitely while waiting.
+- **Starvation Prevention**:
+  - In **FIFO**, a strict linked-list queue ensure coders access dongles in the exact order they requested them.
+  - In **EDF**, a local priority evaluation is implemented. A coder only waits if its immediate left or right neighbor has an earlier deadline. This allows maximum parallelism across the table while guaranteeing that the most urgent local nodes are served first.
+- **Cooldown Handling**: Dongles are treated as entities with their own cooldown timestamps. Before a dongle can be locked by a new coder, the scheduler verifies that `current_time >= last_used_time + cooldown`.
+- **Precise Burnout Detection**: The monitoring thread operates independently, itrating through the coders array with a micro-sleep (`usleep`). It only locks the specific `mutex_burnout` of the coder being checked. This allows detecting a burnout and printing the log within the strict <10ms requirement.
+- **Log Serialization**: Standard output is not thread-safe. A global `mutex_print` is used to encapsulate every logging action, ensuring that timestamps and messages never interleave on the terminal.
+
 ---
 <br>
 
 ## 🕛 Thread synchronization mechanisms
+
+The simulation relies heavily on POSIX threading primitives to coordinate access to shared resources and ensure thread-safe communication.
+
+- **`pthread_mutex_t`**:
+  - **Resource Locking**: Each USB dongle has a dedicated mutex. It acts as a physical lock; a thread must acquire the mutexes of both its assigned dongles to start compiling.
+  - **Data Race Prevention**: Shared variables like `simulation_active`, `time_to_burnout`, and `have_finished` are protected by individual mutexes. When the monitor reads a coder's state, it locks `mutex_burnout` just long enough to copy the value, preventing a data race if the coder updates its timestamp simultaneously.
+- **`pthread_cond_t`**:
+  - Used heavily in the schedulers to avoid CPU-intensive busy-waiting (polling). When a coder is added to the waiting queue (FIFO) or the Heap (EDF) and cannot proceed, it calls `pthread_cond_wait`. This puts the thread to sleep (0% CPU usage).
+  - When a coder finishes compiling and releases its dongles, it triggers a `pthread_cond_broadcast`. This sends a wake-up signal to all sleeping threads, allowing them to re-evaluate their priority and attempt to acquire the dongles again. This mechanism is also crucial during a burnout event to wake up all blocked threads and terminate the process without memory leaks.
 
 ---
 <br>
