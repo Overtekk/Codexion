@@ -123,4 +123,8 @@ case "$1" in
 		;;
 esac
 
+
+
+
+# -fsanitize=thread
 # setarch $(uname -m) -R ./tester.sh 1
